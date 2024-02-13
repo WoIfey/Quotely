@@ -76,6 +76,7 @@ export default function UpdateModal({
 											type="text"
 											id="author"
 											name="author"
+											maxLength={40}
 											value={author}
 											onChange={e => setAuthor(e.target.value)}
 											placeholder="Martin Luther King Jr."
@@ -90,6 +91,7 @@ export default function UpdateModal({
 										<textarea
 											id="quote"
 											name="quote"
+											maxLength={255}
 											value={quote}
 											onChange={e => setQuote(e.target.value)}
 											placeholder="something meaningful..."
