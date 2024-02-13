@@ -36,6 +36,7 @@ export default function CreateQuote() {
 								id="author"
 								name="author"
 								placeholder="Martin Luther King Jr."
+								maxLength={40}
 								value={author}
 								onChange={e => setAuthor(e.target.value)}
 								className="outline-none block w-full rounded-md border-0 bg-white/5 p-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
@@ -55,6 +56,7 @@ export default function CreateQuote() {
 								id="quote"
 								name="quote"
 								placeholder="something meaningful..."
+								maxLength={255}
 								value={quote}
 								onChange={e => setQuote(e.target.value)}
 								className="min-h-10 max-h-60 outline-none block w-full rounded-md border-0 bg-white/5 p-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
