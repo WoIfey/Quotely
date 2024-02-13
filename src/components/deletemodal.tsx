@@ -37,7 +37,7 @@ export default function DeleteModal({ id }: { id: number }) {
 										Are you sure you want to delete this quote?
 									</h3>
 									<div className="flex justify-center items-center">
-										<form action={remove}>
+										<form onSubmit={() => confirm()} action={remove}>
 											<input name="id" type="hidden" value={id} />
 											<button
 												type="submit"

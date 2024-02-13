@@ -1,9 +1,7 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import Delete from '@/components/deletemodal'
 import Update from '@/components/updatemodal'
-import { deleteData, getData, updateData } from '@/utils/handleDatabase'
-import { revalidateTag } from 'next/cache'
+import { getData } from '@/utils/handleDatabase'
 
 const nav = [
 	{ name: 'Quotes', href: '/', current: true },
