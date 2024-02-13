@@ -1,6 +1,6 @@
-import { Pool } from 'pg'
+import { Client } from 'pg'
 
-export const db = new Pool({
+export const db = new Client({
     host: process.env.HOST,
     user: process.env.USER,
     database: process.env.DATABASE,
