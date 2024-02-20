@@ -8,7 +8,7 @@ export async function getData() {
 export async function saveData(quote: string, author: string) {
     try {
         await db.query("INSERT INTO quotes(author, quote) VALUES ($1, $2)", [author, quote])
-        return 'Saved successfully'
+        return 'Saved Quote'
     } catch (error) {
         console.log(error)
         return 'Something went wrong'
@@ -17,8 +17,8 @@ export async function saveData(quote: string, author: string) {
 
 export async function updateData(id: string, author: string, quote: string) {
     try {
-        await db.query("UPDATE quotes SET author = $1, quote = $2 WHERE id = $3", [author, quote, id]);
-        return 'Updated'
+        await db.query("UPDATE quotes SET author = $1, quote = $2 WHERE id = $3", [author, quote, id])
+        return 'Updated Quote'
     } catch (error) {
         console.log(error)
         return 'Something went wrong'
@@ -28,7 +28,17 @@ export async function updateData(id: string, author: string, quote: string) {
 export async function deleteData(id: string) {
     try {
         await db.query("DELETE FROM quotes WHERE id = $1", [id])
-        return 'Deleted'
+        return 'Deleted Quote'
+    } catch (error) {
+        console.log(error)
+        return 'Something went wrong'
+    }
+}
+
+export async function deleteAllData() {
+    try {
+        await db.query("DELETE FROM quotes")
+        return 'Deleted All Quotes'
     } catch (error) {
         console.log(error)
         return 'Something went wrong'

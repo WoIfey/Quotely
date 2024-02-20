@@ -14,7 +14,7 @@ export default function CreateQuote() {
 			setStatus('Quote added!')
 			setTimeout(() => {
 				setStatus('')
-			}, 2000)
+			}, 2500)
 		} catch (error) {
 			setStatus('Failed to add quote.')
 		}
@@ -39,7 +39,8 @@ export default function CreateQuote() {
 								maxLength={40}
 								value={author}
 								onChange={e => setAuthor(e.target.value)}
-								className="outline-none block w-full rounded-md border-0 bg-white/5 p-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+								required
+								className="outline-none block w-full rounded-md border-0 bg-white/5 p-2.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
 							/>
 						</div>
 					</div>
@@ -55,11 +56,12 @@ export default function CreateQuote() {
 							<textarea
 								id="quote"
 								name="quote"
-								placeholder="something meaningful..."
+								placeholder="Something meaningful..."
 								maxLength={255}
 								value={quote}
 								onChange={e => setQuote(e.target.value)}
-								className="min-h-10 max-h-60 outline-none block w-full rounded-md border-0 bg-white/5 p-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+								required
+								className="min-h-10 max-h-60 outline-none block w-full rounded-md border-0 bg-white/5 p-2.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
 							/>
 						</div>
 					</div>

@@ -1,5 +1,5 @@
 "use server"
-import { deleteData, saveData, updateData } from "@/utils/handleDatabase"
+import { deleteData, saveData, updateData, deleteAllData } from "@/utils/handleDatabase"
 import { revalidatePath } from "next/cache"
 
 export const create = async (formData: FormData) => {
@@ -20,5 +20,18 @@ export const update = async (formData: FormData) => {
 export const remove = async (formData: FormData) => {
     const id = formData.get('id') as string
     await deleteData(id)
+    revalidatePath('/')
+}
+
+export const removeall = async () => {
+    await deleteAllData()
+    revalidatePath('/')
+}
+
+export const refresh = async () => {
+    revalidatePath('/')
+}
+
+export const like = async () => {
     revalidatePath('/')
 }

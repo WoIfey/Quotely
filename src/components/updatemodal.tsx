@@ -2,6 +2,7 @@
 import Image from 'next/image'
 import { useState } from 'react'
 import { update } from '@/app/actions'
+import { useRouter } from 'next/navigation'
 
 export default function UpdateModal({
 	quote: initialQuote,
@@ -12,6 +13,7 @@ export default function UpdateModal({
 	author: string
 	id: number
 }) {
+	const router = useRouter()
 	const [toggleModal, setToggleModal] = useState(false)
 	const [quote, setQuote] = useState(initialQuote)
 	const [author, setAuthor] = useState(initialAuthor)
@@ -26,15 +28,22 @@ export default function UpdateModal({
 
 	const confirm = () => {
 		setToggleModal(false)
+		router.refresh()
 	}
 	return (
 		<>
-			<div className="hidden group-hover:block">
+			<div className="hidden group-hover:block z-10">
 				<button
 					onClick={showModal}
-					className="h-10 rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+					className="flex items-center justify-center h-8 w-8 rounded-md bg-gray-600 text-sm font-semibold shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
 				>
-					Update
+					<Image
+						src="/gear.svg"
+						alt="Update"
+						width={32}
+						height={32}
+						className="p-1"
+					/>
 				</button>
 			</div>
 			{toggleModal && (
@@ -51,11 +60,10 @@ export default function UpdateModal({
 										type="button"
 										onClick={cancel}
 										className="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-										data-modal-hide="authentication-modal"
 									>
 										<Image
 											src="x.svg"
-											alt=""
+											alt="x"
 											width={32}
 											height={32}
 											className="h-5 w-5"
@@ -79,6 +87,7 @@ export default function UpdateModal({
 											maxLength={40}
 											value={author}
 											onChange={e => setAuthor(e.target.value)}
+											required
 											placeholder="Martin Luther King Jr."
 											className="mb-4 outline-none block w-full rounded-md border-0 bg-white/10 p-2.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
 										/>
@@ -94,7 +103,8 @@ export default function UpdateModal({
 											maxLength={255}
 											value={quote}
 											onChange={e => setQuote(e.target.value)}
-											placeholder="something meaningful..."
+											required
+											placeholder="Something meaningful..."
 											className="mt-2 min-h-10 max-h-60 outline-none block w-full rounded-md border-0 bg-white/10 p-2.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
 										/>
 										<button
