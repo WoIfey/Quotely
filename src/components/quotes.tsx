@@ -40,8 +40,8 @@ export default function quotes({ data }: { data: any[] }) {
 							<div className="text-xs font-extralight bg-slate-900 rounded px-1">
 								{new Date(q.createdAt).toLocaleString()}
 							</div>
-							{new Date(q.createdAt).toDateString() !==
-								new Date(q.updatedAt).toDateString() && (
+							{new Date(q.createdAt).toLocaleString() !==
+								new Date(q.updatedAt).toLocaleString() && (
 								<div className="relative group flex text-[10px] font-medium z-20">
 									<h1 className="bg-slate-900 text-slate-200 rounded px-1 relative cursor-default">
 										edited
