@@ -21,7 +21,7 @@ export default function CreateQuote() {
 		}
 	}
 	return (
-		<div className="mt-8 xl:mt-12 divide-y divide-white/5 xl:pl-72">
+		<div className="mt-10 xl:mt-12 divide-y divide-white/5 xl:pl-72">
 			<div className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-10 sm:px-6 md:grid-cols-3 lg:px-8">
 				<div>
 					<h2 className="text-lg font-semibold leading-7 text-white">
@@ -38,7 +38,7 @@ export default function CreateQuote() {
 							<div className="sm:col-span-3 sm:w-1/2">
 								<label
 									htmlFor="author"
-									className="block text-sm font-medium leading-6 text-white"
+									className="block text-base font-medium leading-6 text-white"
 								>
 									Author
 								</label>
@@ -52,15 +52,24 @@ export default function CreateQuote() {
 										value={author}
 										onChange={e => setAuthor(e.target.value)}
 										required
-										className="outline-none block w-full rounded-md border-0 bg-white/5 p-2.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+										className={`outline-none block w-full rounded-md border-0 bg-white/5 p-2.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6 ${
+											author.length === 40
+												? 'ring-red-500 ring-1 focus:ring-2 focus:ring-red-800'
+												: ''
+										}`}
 									/>
+									<div className="text-white mt-3 text-xs">
+										<span className={`${author.length === 40 ? 'text-red-500' : ''}`}>
+											{author.length}/40
+										</span>
+									</div>
 								</div>
 							</div>
 
 							<div className="col-span-full">
 								<label
 									htmlFor="quote"
-									className="block text-sm font-medium leading-6 text-white"
+									className="block text-base font-medium leading-6 text-white"
 								>
 									Quote
 								</label>
@@ -73,12 +82,21 @@ export default function CreateQuote() {
 										value={quote}
 										onChange={e => setQuote(e.target.value)}
 										required
-										className="min-h-10 max-h-60 outline-none block w-full rounded-md border-0 bg-white/5 p-2.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+										className={`min-h-28 max-h-40 outline-none block w-full rounded-md border-0 bg-white/5 p-2.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6 ${
+											quote.length === 255
+												? 'ring-red-500 ring-1 focus:ring-2 focus:ring-red-800'
+												: ''
+										}`}
 									/>
+									<div className="text-white mt-3 text-xs">
+										<span className={`${quote.length === 255 ? 'text-red-500' : ''}`}>
+											{quote.length}/255
+										</span>
+									</div>
 								</div>
 							</div>
 
-							<div className="mt-4 flex">
+							<div className="mt-3 flex">
 								<button
 									onMouseEnter={() => setCreatedHover(true)}
 									onMouseLeave={() => setCreatedHover(false)}

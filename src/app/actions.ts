@@ -1,5 +1,5 @@
 "use server"
-import { deleteData, saveData, updateData, deleteAllData } from "@/utils/handleDatabase"
+import { deleteData, saveData, updateData, deleteAllData, incrementLikes, decrementLikes } from "@/utils/handleDatabase"
 import { revalidatePath } from "next/cache"
 
 export const create = async (formData: FormData) => {
@@ -32,6 +32,12 @@ export const refresh = async () => {
     revalidatePath('/')
 }
 
-export const like = async () => {
+export const likeQuote = async (id: string) => {
+    await incrementLikes(id)
+    revalidatePath('/')
+}
+
+export const dislikeQuote = async (id: string) => {
+    await decrementLikes(id)
     revalidatePath('/')
 }

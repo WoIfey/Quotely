@@ -44,3 +44,23 @@ export async function deleteAllData() {
         return 'Something went wrong'
     }
 }
+
+export async function incrementLikes(id: string) {
+    try {
+        await db.query("UPDATE quotes SET likes = likes + 1 WHERE id = $1", [id])
+        return 'Liked Quote'
+    } catch (error) {
+        console.log(error)
+        return 'Something went wrong'
+    }
+}
+
+export async function decrementLikes(id: string) {
+    try {
+        await db.query("UPDATE quotes SET likes = likes - 1 WHERE id = $1", [id])
+        return 'Disliked Quote'
+    } catch (error) {
+        console.log(error)
+        return 'Something went wrong'
+    }
+}

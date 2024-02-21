@@ -66,7 +66,14 @@ export default function UpdateModal({
 						<div className="relative p-4 w-full max-w-md max-h-full">
 							<div className="relative bg-white rounded-lg shadow dark:bg-gray-900">
 								<div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-									<h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+									<h3 className="flex justify-center items-center gap-2 text-xl font-semibold text-gray-900 dark:text-white">
+										<Image
+											src="gear.svg"
+											alt="x"
+											width={32}
+											height={32}
+											className="h-6 w-6"
+										/>
 										Update Quote
 									</h3>
 									<button
@@ -87,39 +94,61 @@ export default function UpdateModal({
 								<div className="p-5 pb-6">
 									<form onSubmit={() => confirm()} action={update}>
 										<input name="id" type="hidden" value={id} />
-										<label
-											htmlFor="author"
-											className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-										>
-											Author
-										</label>
-										<input
-											type="text"
-											id="author"
-											name="author"
-											maxLength={40}
-											value={author}
-											onChange={e => setAuthor(e.target.value)}
-											required
-											placeholder="Martin Luther King Jr."
-											className="mb-4 outline-none block w-full rounded-md border-0 bg-white/10 p-2.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
-										/>
-										<label
-											htmlFor="quote"
-											className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-										>
-											Quote
-										</label>
-										<textarea
-											id="quote"
-											name="quote"
-											maxLength={255}
-											value={quote}
-											onChange={e => setQuote(e.target.value)}
-											required
-											placeholder="Something meaningful..."
-											className="mt-2 min-h-10 max-h-60 outline-none block w-full rounded-md border-0 bg-white/10 p-2.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
-										/>
+										<div>
+											<label
+												htmlFor="author"
+												className="block mb-2 text-base font-medium text-gray-900 dark:text-white"
+											>
+												Author
+											</label>
+											<input
+												type="text"
+												id="author"
+												name="author"
+												maxLength={40}
+												value={author}
+												onChange={e => setAuthor(e.target.value)}
+												required
+												placeholder="Martin Luther King Jr."
+												className={`outline-none block w-full rounded-md border-0 bg-white/10 p-2.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6 ${
+													author.length === 40
+														? 'ring-red-500 ring-1 focus:ring-2 focus:ring-red-800'
+														: ''
+												}`}
+											/>
+											<div className="text-white mt-2 text-xs">
+												<span className={`${author.length === 40 ? 'text-red-500' : ''}`}>
+													{author.length}/40
+												</span>
+											</div>
+										</div>
+										<div className="mt-5">
+											<label
+												htmlFor="quote"
+												className="block mb-2 text-base font-medium text-gray-900 dark:text-white"
+											>
+												Quote
+											</label>
+											<textarea
+												id="quote"
+												name="quote"
+												maxLength={255}
+												value={quote}
+												onChange={e => setQuote(e.target.value)}
+												required
+												placeholder="Something meaningful..."
+												className={`mt-2 min-h-28 max-h-40 outline-none block w-full rounded-md border-0 bg-white/10 p-2.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6 ${
+													quote.length === 255
+														? 'ring-red-500 ring-1 focus:ring-2 focus:ring-red-800'
+														: ''
+												}`}
+											/>
+											<div className="text-white mt-2 text-xs">
+												<span className={`${quote.length === 255 ? 'text-red-500' : ''}`}>
+													{quote.length}/255
+												</span>
+											</div>
+										</div>
 										<button
 											type="submit"
 											className="mt-5 h-10 rounded-md bg-indigo-600 w-full px-3.5 py-2.5 text-sm font-semibold shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"

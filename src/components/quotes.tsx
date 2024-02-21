@@ -24,13 +24,13 @@ export default function quotes({ data }: { data: any[] }) {
 						className="relative flex flex-col bg-slate-800 rounded-xl p-4"
 					>
 						<div className="flex flex-col justify-between gap-1.5">
-							<div className="text-lg italic w-auto break-all">"{q.quote}"</div>
-							<div className="text-base font-thin text-end w-full break-all">
+							<div className="text-lg italic break-all">"{q.quote}"</div>
+							<div className="text-base font-thin text-end break-all">
 								— {q.author}
 							</div>
 						</div>
-						<div className="group flex items-end mt-3 h-full gap-1.5 justify-between">
-							<Likes />
+						<div className="group flex min-[300px]:flex-row flex-col sm:items-end mt-3 h-full gap-1.5 justify-between">
+							<Likes id={q.id} likes={q.likes} />
 							<div className="flex items-end gap-1.5">
 								<Copy quote={q.quote} id={q.id} />
 								<Delete id={q.id} />
