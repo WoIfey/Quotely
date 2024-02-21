@@ -24,7 +24,11 @@ export default function Likes({ id, likes }: { id: string; likes: number }) {
 					onMouseEnter={() => setLikesHover(true)}
 					onMouseLeave={() => setLikesHover(false)}
 				>
-					{likes}
+					{likes > 999
+						? likes >= 10000
+							? `${Math.floor(likes / 1000)}k`
+							: `${Math.floor(likes / 1000)}.${Math.floor((likes % 1000) / 100)}k`
+						: likes}
 				</p>
 				<span
 					className={`pointer-events-none transition-opacity bg-gray-700 px-2 py-1 text-xs rounded-md absolute   

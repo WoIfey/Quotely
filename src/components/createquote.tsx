@@ -53,9 +53,7 @@ export default function CreateQuote() {
 										onChange={e => setAuthor(e.target.value)}
 										required
 										className={`outline-none block w-full rounded-md border-0 bg-white/5 p-2.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6 ${
-											author.length === 40
-												? 'ring-red-500 ring-1 focus:ring-2 focus:ring-red-800'
-												: ''
+											author.length === 40 ? 'ring-red-500 ring-2 focus:ring-red-700' : ''
 										}`}
 									/>
 									<div className="text-white mt-3 text-xs">
@@ -83,9 +81,7 @@ export default function CreateQuote() {
 										onChange={e => setQuote(e.target.value)}
 										required
 										className={`min-h-28 max-h-40 outline-none block w-full rounded-md border-0 bg-white/5 p-2.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6 ${
-											quote.length === 255
-												? 'ring-red-500 ring-1 focus:ring-2 focus:ring-red-800'
-												: ''
+											quote.length === 255 ? 'ring-red-500 ring-2 focus:ring-red-700' : ''
 										}`}
 									/>
 									<div className="text-white mt-3 text-xs">
