@@ -5,6 +5,7 @@ import Image from 'next/image'
 
 export default function DeleteModal() {
 	const [toggleModal, setToggleModal] = useState(false)
+	const [deleteAllHover, setDeleteAllHover] = useState(false)
 
 	const showModal = () => {
 		setToggleModal(true)
@@ -22,6 +23,8 @@ export default function DeleteModal() {
 			<button
 				type="button"
 				onClick={showModal}
+				onMouseEnter={() => setDeleteAllHover(true)}
+				onMouseLeave={() => setDeleteAllHover(false)}
 				className="flex items-center justify-center h-10 w-10 rounded-md bg-red-600 text-sm font-semibold shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
 			>
 				<Image
@@ -31,6 +34,16 @@ export default function DeleteModal() {
 					height={32}
 					className="p-1"
 				/>
+				<div className="relative group flex text-[10px] font-medium z-20">
+					<span
+						className={`pointer-events-none transition-opacity bg-gray-700 px-2 py-1 text-xs rounded-md absolute   
+                            -translate-x-3/4 -translate-y-16 ${
+																													deleteAllHover ? 'opacity-100' : 'opacity-0'
+																												} m-4 mx-auto top-1/2 left-1/2 min-w-max transform`}
+					>
+						Delete All
+					</span>
+				</div>
 			</button>
 			{toggleModal && (
 				<>

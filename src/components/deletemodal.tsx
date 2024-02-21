@@ -5,8 +5,9 @@ import { remove } from '@/app/actions'
 import { useRouter } from 'next/navigation'
 
 export default function DeleteModal({ id }: { id: number }) {
-	const router = useRouter()
+	/* const router = useRouter() */
 	const [toggleModal, setToggleModal] = useState(false)
+	const [deleteHover, setDeleteHover] = useState(false)
 
 	const showModal = () => {
 		setToggleModal(true)
@@ -18,22 +19,34 @@ export default function DeleteModal({ id }: { id: number }) {
 
 	const confirm = () => {
 		setToggleModal(false)
-		router.replace('/')
+		/* router.replace('/') */
 	}
 	return (
 		<>
 			<div className="hidden group-hover:block z-10">
 				<button
 					onClick={showModal}
+					onMouseEnter={() => setDeleteHover(true)}
+					onMouseLeave={() => setDeleteHover(false)}
 					className="flex items-center justify-center h-8 w-8 rounded-md bg-red-600 text-sm font-semibold shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
 				>
-					<Image
-						src="/trash.svg"
-						alt="Update"
-						width={32}
-						height={32}
-						className="p-1"
-					/>
+					<div className="relative group flex text-[10px] font-medium z-20">
+						<Image
+							src="/trash.svg"
+							alt="Delete"
+							width={32}
+							height={32}
+							className="p-1"
+						/>
+						<span
+							className={`pointer-events-none transition-opacity bg-gray-700 px-2 py-1 text-xs rounded-md absolute   
+                            -translate-x-1/2 -translate-y-16 ${
+																													deleteHover ? 'opacity-100' : 'opacity-0'
+																												} m-4 mx-auto top-1/2 left-1/2 min-w-max transform`}
+						>
+							Delete
+						</span>
+					</div>
 				</button>
 			</div>
 			{toggleModal && (

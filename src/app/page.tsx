@@ -1,15 +1,9 @@
-import Link from 'next/link'
-import Image from 'next/image'
-import Filter from '@/components/filterlength'
+import FilterLength from '@/components/filterlength'
+import Refresh from '@/components/refresh'
 import DeleteAll from '@/components/deleteallmodal'
 import Quotes from '@/components/quotes'
+import Header from '@/components/header'
 import { getData } from '@/utils/handleDatabase'
-import { refresh } from '@/app/actions'
-
-const nav = [
-	{ name: 'Quotes', href: '/', current: true },
-	{ name: 'Create', href: '/create', current: false },
-]
 
 export default async function Home() {
 	let data = await getData()
@@ -18,26 +12,7 @@ export default async function Home() {
 	const filteredData = data.filter(e => e.quote == '') */
 	return (
 		<div className="bg-slate-950 min-h-dvh">
-			<header className="border-b border-white/5">
-				<nav className="z-40 fixed flex overflow-x-auto py-4 bg-slate-900 w-full">
-					<ul
-						role="list"
-						className="flex min-w-full flex-none gap-x-6 px-4 text-sm font-semibold leading-6 text-gray-400 sm:px-6 lg:px-8"
-					>
-						{nav.map(item => (
-							<li key={item.name}>
-								<Link
-									href={item.href}
-									className={item.current ? 'text-indigo-400 p-4' : 'p-4'}
-								>
-									{item.name}
-								</Link>
-							</li>
-						))}
-					</ul>
-				</nav>
-			</header>
-
+			<Header currentPage="/" />
 			<div className="mt-6 xl:mt-8 divide-y divide-white/5">
 				<div className="grid grid-cols-1 gap-x-8 gap-y-10 px-4 py-10 sm:px-6 md:grid-cols-3 lg:px-8">
 					<div className="md:col-span-4 text-white">
@@ -47,26 +22,13 @@ export default async function Home() {
 									<h2 className="text-3xl font-bold leading-7 tracking-widest italic">
 										QUOTES
 									</h2>
-									<form action={refresh}>
-										<button
-											type="submit"
-											className="flex items-center justify-center h-10 w-10 rounded-md bg-blue-600 text-sm font-semibold shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-										>
-											<Image
-												src="/arrows-clockwise.svg"
-												alt="Refresh"
-												width={32}
-												height={32}
-												className="p-1"
-											/>
-										</button>
-									</form>
+									<Refresh />
 									<DeleteAll />
 								</div>
 							</div>
 							<div className="sm:col-span-2">
 								<label htmlFor="sort" className="block text-md leading-6 text-white">
-									Sort (WIP)
+									Sort
 								</label>
 								<select
 									id="sort"
@@ -79,7 +41,7 @@ export default async function Home() {
 							</div>
 							<div className="sm:col-span-2">
 								<label htmlFor="filter" className="block text-md leading-6 text-white">
-									Filter (WIP)
+									Filter
 								</label>
 								<select
 									id="filter"
@@ -90,7 +52,7 @@ export default async function Home() {
 									<option>Filter by least liked</option>
 								</select>
 							</div>
-							<Filter />
+							<FilterLength />
 						</div>
 						<Quotes data={data} />
 					</div>

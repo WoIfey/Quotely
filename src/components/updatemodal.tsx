@@ -13,10 +13,11 @@ export default function UpdateModal({
 	author: string
 	id: number
 }) {
-	const router = useRouter()
+	/* const router = useRouter() */
 	const [toggleModal, setToggleModal] = useState(false)
 	const [quote, setQuote] = useState(initialQuote)
 	const [author, setAuthor] = useState(initialAuthor)
+	const [updateHover, setUpdateHover] = useState(false)
 
 	const showModal = () => {
 		setToggleModal(true)
@@ -28,22 +29,34 @@ export default function UpdateModal({
 
 	const confirm = () => {
 		setToggleModal(false)
-		router.refresh()
+		/* router.refresh() */
 	}
 	return (
 		<>
 			<div className="hidden group-hover:block z-10">
 				<button
 					onClick={showModal}
+					onMouseEnter={() => setUpdateHover(true)}
+					onMouseLeave={() => setUpdateHover(false)}
 					className="flex items-center justify-center h-8 w-8 rounded-md bg-gray-600 text-sm font-semibold shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
 				>
-					<Image
-						src="/gear.svg"
-						alt="Update"
-						width={32}
-						height={32}
-						className="p-1"
-					/>
+					<div className="relative group flex text-[10px] font-medium z-20">
+						<Image
+							src="/gear.svg"
+							alt="Update"
+							width={32}
+							height={32}
+							className="p-1"
+						/>
+						<span
+							className={`pointer-events-none transition-opacity bg-gray-700 px-2 py-1 text-xs rounded-md absolute   
+                            -translate-x-1/2 -translate-y-16 ${
+																													updateHover ? 'opacity-100' : 'opacity-0'
+																												} m-4 mx-auto top-1/2 left-1/2 min-w-max transform`}
+						>
+							Update
+						</span>
+					</div>
 				</button>
 			</div>
 			{toggleModal && (
