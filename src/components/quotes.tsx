@@ -18,11 +18,15 @@ export default function quotes({ data }: { data: any[] }) {
 			sortedData.sort((a: any, b: any) => b.id - a.id)
 		} else if (sortPreference === 'old') {
 			sortedData.sort((a: any, b: any) => a.id - b.id)
+		} else if (sortPreference === 'least') {
+			sortedData.sort((a: any, b: any) => a.likes - b.likes)
+		} else if (sortPreference === 'most') {
+			sortedData.sort((a: any, b: any) => b.likes - a.likes)
 		}
 
-		if (filterPreference === 'disliked') {
+		if (filterPreference === 'liked') {
 			sortedData = sortedData.filter(quote => !/^-/.test(quote.likes))
-		} else if (filterPreference === 'liked') {
+		} else if (filterPreference === 'disliked') {
 			sortedData = sortedData.filter(quote => /^-/.test(quote.likes))
 		}
 
