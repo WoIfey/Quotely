@@ -2,7 +2,6 @@
 import Image from 'next/image'
 import { useState } from 'react'
 import { update } from '@/app/actions'
-import { useRouter } from 'next/navigation'
 
 export default function UpdateModal({
 	quote: initialQuote,
@@ -13,7 +12,6 @@ export default function UpdateModal({
 	author: string
 	id: number
 }) {
-	/* const router = useRouter() */
 	const [toggleModal, setToggleModal] = useState(false)
 	const [quote, setQuote] = useState(initialQuote)
 	const [author, setAuthor] = useState(initialAuthor)
@@ -29,7 +27,6 @@ export default function UpdateModal({
 
 	const confirm = () => {
 		setToggleModal(false)
-		/* router.refresh() */
 	}
 	return (
 		<>

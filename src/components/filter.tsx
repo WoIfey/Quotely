@@ -15,7 +15,7 @@ export default function Filter() {
 		} else if (filterPreference === 'Filter out liked') {
 			localStorage.setItem('filterPreference', 'liked')
 		} else if (filterPreference === 'Filter out nothing') {
-			localStorage.setItem('filterPreference', 'nothing')
+			localStorage.removeItem('filterPreference')
 		}
 	}
 

@@ -9,22 +9,21 @@ export default function quotes({ data }: { data: any[] }) {
 	const [quotes, setQuotes] = useState(data)
 
 	useEffect(() => {
-		let sortedData = [...data]
 		const sortPreference = localStorage.getItem('sortPreference')
 		const filterPreference = localStorage.getItem('filterPreference')
 
+		let sortedData = [...data]
+
 		if (sortPreference === 'new') {
-			sortedData = sortedData.sort((a: any, b: any) => b.id - a.id)
+			sortedData.sort((a: any, b: any) => b.id - a.id)
 		} else if (sortPreference === 'old') {
-			sortedData = sortedData.sort((a: any, b: any) => a.id - b.id)
+			sortedData.sort((a: any, b: any) => a.id - b.id)
 		}
 
 		if (filterPreference === 'disliked') {
 			sortedData = sortedData.filter(quote => !/^-/.test(quote.likes))
 		} else if (filterPreference === 'liked') {
 			sortedData = sortedData.filter(quote => /^-/.test(quote.likes))
-		} else if (filterPreference === 'nothing') {
-			sortedData
 		}
 
 		setQuotes(sortedData)
@@ -32,6 +31,9 @@ export default function quotes({ data }: { data: any[] }) {
 	return (
 		<>
 			<div className="text-white sm:p-8 p-4 grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+				{quotes.length === 0 && (
+					<p className="italic text-gray-400">There are currently no quotes!</p>
+				)}
 				{quotes.map(q => (
 					<div
 						key={q.id}

@@ -19,9 +19,10 @@ export default async function Home() {
 							<div className="sm:col-span-6">
 								<div className="flex items-center sm:flex-row flex-col gap-4">
 									<h2 className="text-3xl font-bold leading-7 tracking-widest italic">
-										QUOTES
+										QUOTES{' '}
+										<span className="not-italic tracking-normal">({data.length})</span>
 									</h2>
-									<div className="flex gap-4">
+									<div className="flex gap-3">
 										<Refresh />
 										<DeleteAll />
 									</div>
