@@ -21,7 +21,6 @@ export default function DeleteModal() {
 	return (
 		<>
 			<button
-				type="button"
 				onClick={showModal}
 				onMouseEnter={() => setDeleteAllHover(true)}
 				onMouseLeave={() => setDeleteAllHover(false)}

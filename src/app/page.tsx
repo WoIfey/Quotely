@@ -1,4 +1,3 @@
-import FilterLength from '@/components/filterlength'
 import Refresh from '@/components/refresh'
 import DeleteAll from '@/components/deleteallmodal'
 import Quotes from '@/components/quotes'
@@ -28,13 +27,12 @@ export default async function Home() {
 									</div>
 								</div>
 							</div>
-							<Sort data={data} />
-							<Filter data={data} />
-							<FilterLength data={data} />
+							<Sort />
+							<Filter />
 						</div>
 					</div>
 				</div>
-				<div className="pt-[29rem] sm:pt-56">
+				<div className="pt-[28rem] sm:pt-64">
 					<Quotes data={data} />
 				</div>
 			</div>

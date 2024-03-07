@@ -2,17 +2,8 @@
 import Image from 'next/image'
 import { useState } from 'react'
 import { remove } from '@/app/actions'
-import { useRouter } from 'next/navigation'
 
-export default function DeleteModal({
-	id,
-	update,
-}: {
-	id: number
-	update: ({ id }: { id: number }) => void
-}) {
-	const router = useRouter()
-	const [updateQuotes, setUpdateQuotes] = useState(false)
+export default function DeleteModal({ id }: { id: number }) {
 	const [deleteHover, setDeleteHover] = useState(false)
 	const [toggleModal, setToggleModal] = useState(false)
 
@@ -26,8 +17,6 @@ export default function DeleteModal({
 
 	const confirm = () => {
 		setToggleModal(false)
-		update({ id })
-		router.refresh()
 	}
 	return (
 		<>
