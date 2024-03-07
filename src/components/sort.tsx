@@ -30,7 +30,7 @@ export default function Sort() {
 				name="sort"
 				value={sortPreference}
 				onChange={handleSortChange}
-				className="bg-slate-700 mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 ring-1 ring-inset focus:ring-2 ring-slate-500 focus:ring-indigo-600 sm:text-sm sm:leading-6"
+				className="bg-slate-700 mt-2 block w-full rounded-md border-0 py-1 ring-1 ring-inset focus:ring-2 ring-slate-500 focus:ring-indigo-600 sm:text-sm sm:leading-6"
 			>
 				<option value="">Sort by default</option>
 				<option value="new">Sort by newest</option>
@@ -41,7 +41,7 @@ export default function Sort() {
 			<form action={refresh}>
 				<button
 					onClick={handleSort}
-					className="bg-slate-700 mt-2 block rounded-md border-0 px-1 ring-1 ring-inset focus:ring-2 ring-slate-500 focus:ring-indigo-600 sm:text-sm sm:leading-6"
+					className="mt-2 px-1 py-0.5 text-white rounded-md bg-indigo-600 text-sm shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
 				>
 					Apply Sort
 				</button>

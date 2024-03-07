@@ -47,7 +47,7 @@ export default function UpdateModal({
 						/>
 						<span
 							className={`pointer-events-none transition-opacity bg-gray-700 px-2 py-1 text-xs rounded-md absolute   
-                            -translate-x-1/2 -translate-y-16 ${
+                            -translate-x-1/2 -translate-y-[3.7rem] ${
 																													updateHover ? 'opacity-100' : 'opacity-0'
 																												} m-4 mx-auto top-1/2 left-1/2 min-w-max transform`}
 						>

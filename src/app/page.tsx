@@ -33,7 +33,7 @@ export default async function Home() {
 						</div>
 					</div>
 				</div>
-				<div className="pt-[28rem] sm:pt-64">
+				<div className="pt-[27rem] sm:pt-64">
 					<Quotes data={data} />
 				</div>
 			</div>
