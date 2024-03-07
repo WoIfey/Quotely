@@ -13,9 +13,9 @@ export default function filter({ data }: { data: any[] }) {
 				name="filter"
 				className="bg-slate-700 mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 ring-1 ring-inset focus:ring-2 ring-slate-500 focus:ring-indigo-600 sm:text-sm sm:leading-6"
 			>
-				<option>Filter by none</option>
-				<option>Filter by most liked</option>
-				<option>Filter by least liked</option>
+				<option>Filter out disliked</option>
+				<option disabled>Filter out liked</option>
+				<option disabled>Filter out nothing</option>
 			</select>
 		</div>
 	)

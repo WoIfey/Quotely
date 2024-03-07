@@ -4,10 +4,17 @@ import { useState } from 'react'
 import { remove } from '@/app/actions'
 import { useRouter } from 'next/navigation'
 
-export default function DeleteModal({ id }: { id: number }) {
-	/* const router = useRouter() */
-	const [toggleModal, setToggleModal] = useState(false)
+export default function DeleteModal({
+	id,
+	update,
+}: {
+	id: number
+	update: ({ id }: { id: number }) => void
+}) {
+	const router = useRouter()
+	const [updateQuotes, setUpdateQuotes] = useState(false)
 	const [deleteHover, setDeleteHover] = useState(false)
+	const [toggleModal, setToggleModal] = useState(false)
 
 	const showModal = () => {
 		setToggleModal(true)
@@ -19,7 +26,8 @@ export default function DeleteModal({ id }: { id: number }) {
 
 	const confirm = () => {
 		setToggleModal(false)
-		/* router.replace('/') */
+		update({ id })
+		router.refresh()
 	}
 	return (
 		<>

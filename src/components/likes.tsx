@@ -24,10 +24,16 @@ export default function Likes({ id, likes }: { id: string; likes: number }) {
 					onMouseEnter={() => setLikesHover(true)}
 					onMouseLeave={() => setLikesHover(false)}
 				>
-					{likes > 999
-						? likes >= 10000
-							? `${Math.floor(likes / 1000)}k`
-							: `${Math.floor(likes / 1000)}.${Math.floor((likes % 1000) / 100)}k`
+					{likes >= 10000
+						? `${Math.floor(likes / 1000)}k`
+						: likes >= 1000
+						? `${Math.floor(likes / 1000)}.${Math.floor((likes % 1000) / 100)}k`
+						: likes <= -10000
+						? `-${Math.floor(Math.abs(likes) / 1000)}k`
+						: likes <= -1000
+						? `-${Math.floor(Math.abs(likes) / 1000)}.${Math.floor(
+								(Math.abs(likes) % 1000) / 100
+						  )}k`
 						: likes}
 				</p>
 				<span

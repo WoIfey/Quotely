@@ -43,7 +43,7 @@ export default function UpdateModal({
 					<div className="relative group flex text-[10px] font-medium z-20">
 						<Image
 							src="/gear.svg"
-							alt="Update"
+							alt="Edit"
 							width={32}
 							height={32}
 							className="p-1"
@@ -54,7 +54,7 @@ export default function UpdateModal({
 																													updateHover ? 'opacity-100' : 'opacity-0'
 																												} m-4 mx-auto top-1/2 left-1/2 min-w-max transform`}
 						>
-							Update
+							Edit
 						</span>
 					</div>
 				</button>
@@ -74,7 +74,7 @@ export default function UpdateModal({
 											height={32}
 											className="h-6 w-6"
 										/>
-										Update Quote
+										Edit Quote
 									</h3>
 									<button
 										type="button"

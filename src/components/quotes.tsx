@@ -3,25 +3,48 @@ import Delete from '@/components/deletemodal'
 import Update from '@/components/updatemodal'
 import Copy from '@/components/copy'
 import Likes from '@/components/likes'
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
 export default function quotes({ data }: { data: any[] }) {
-	/* const router = useRouter()
 	const [quotes, setQuotes] = useState(data)
-	function handleSort() {
-		const sortedData = quotes.sort((a: any, b: any) => a.id - b.id)
+	const [updateQuotes, setUpdateQuotes] = useState(false)
+
+	function handleSortByOld() {
+		const sortedData = [...quotes].sort((a: any, b: any) => a.id - b.id)
 		setQuotes(sortedData)
-		router.refresh()
-	} */
+	}
+
+	function updateFunction() {
+		setUpdateQuotes(!updateQuotes)
+	}
+
+	function handleFilterDisliked() {
+		const filtered = quotes.filter(quote => !/^-/.test(quote.likes))
+		setQuotes(filtered)
+	}
+
+	useEffect(() => {
+		setQuotes(data)
+	}, [data])
 	return (
 		<>
-			{/* <button onClick={handleSort}>Sort</button> */}
-			<div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-10">
-				{data.map(q => (
+			<button
+				onClick={handleSortByOld}
+				className="text-white absolute sm:fixed top-48 left-6 sm:top-36 sm:left-8 z-30 bg-slate-700 mt-3 block rounded-md border-0 p-1.5 ring-1 ring-inset focus:ring-2 ring-slate-500 focus:ring-indigo-600 sm:text-sm sm:leading-6"
+			>
+				Sort
+			</button>
+			<button
+				onClick={handleFilterDisliked}
+				className="text-white absolute sm:fixed top-72 left-6 sm:top-36 sm:left-64 sm:ml-1.5 z-30 bg-slate-700 mt-3 block rounded-md border-0 p-1.5 ring-1 ring-inset focus:ring-2 ring-slate-500 focus:ring-indigo-600 sm:text-sm sm:leading-6"
+			>
+				Filter
+			</button>
+			<div className="text-white sm:p-8 p-4 grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+				{quotes.map(q => (
 					<div
 						key={q.id}
-						className="relative flex flex-col bg-slate-800 rounded-xl p-4"
+						className="relative flex flex-col bg-slate-800 rounded-lg p-4"
 					>
 						<div className="flex flex-col justify-between gap-1.5">
 							<div className="text-lg italic break-all">"{q.quote}"</div>
@@ -33,7 +56,7 @@ export default function quotes({ data }: { data: any[] }) {
 							<Likes id={q.id} likes={q.likes} />
 							<div className="flex items-end gap-1.5">
 								<Copy quote={q.quote} id={q.id} />
-								<Delete id={q.id} />
+								<Delete id={q.id} update={updateFunction} />
 								<Update quote={q.quote} author={q.author} id={q.id} />
 							</div>
 							<span className="absolute inset-0" />

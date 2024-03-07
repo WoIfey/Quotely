@@ -47,8 +47,8 @@ export default function DeleteModal() {
 			</button>
 			{toggleModal && (
 				<>
-					<div className="z-50 fixed inset-0 bg-black opacity-90"></div>
-					<div className="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full inset-0">
+					<div className="z-[100] fixed inset-0 bg-black opacity-90"></div>
+					<div className="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-[100] flex justify-center items-center w-full inset-0">
 						<div className="relative p-4 w-full max-w-md max-h-full">
 							<div className="relative bg-white rounded-lg shadow dark:bg-gray-900">
 								<div className="p-4 md:p-5 text-center">
