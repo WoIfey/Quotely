@@ -19,8 +19,10 @@ export default function Likes({ id, likes }: { id: string; likes: number }) {
 	return (
 		<div className="flex gap-1.5 z-10">
 			<div className="relative group flex text-[10px] font-medium z-20">
-				<p
-					className="rounded-md bg-gray-600 flex justify-center items-center w-8 h-8 text-sm font-semibold shadow-sm cursor-default"
+				<span
+					className={`rounded-md flex justify-center items-center w-8 h-8 text-sm font-semibold shadow-sm cursor-default ${
+						likes < 0 ? 'bg-red-600' : likes > 0 ? 'bg-green-600' : 'bg-gray-600'
+					}`}
 					onMouseEnter={() => setLikesHover(true)}
 					onMouseLeave={() => setLikesHover(false)}
 				>
@@ -35,7 +37,7 @@ export default function Likes({ id, likes }: { id: string; likes: number }) {
 								(Math.abs(likes) % 1000) / 100
 						  )}k`
 						: likes}
-				</p>
+				</span>
 				<span
 					className={`pointer-events-none transition-opacity bg-gray-700 px-2 py-1 text-xs rounded-md absolute   
 					-translate-x-1/2 -translate-y-16 ${
