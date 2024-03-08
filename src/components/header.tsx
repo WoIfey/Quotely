@@ -8,7 +8,7 @@ const nav = [
 export default function Header({ currentPage }: { currentPage: string }) {
 	return (
 		<header className="border-b border-white/5">
-			<nav className="z-40 fixed flex overflow-x-auto py-4 bg-gray-800 w-full">
+			<nav className="z-30 sm:fixed flex overflow-x-auto py-4 bg-gray-800 w-full">
 				<ul
 					role="list"
 					className="flex min-w-full flex-none gap-x-6 px-4 text-sm font-semibold leading-6 text-gray-400 sm:px-6 lg:px-8"
