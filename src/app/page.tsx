@@ -1,19 +1,18 @@
-import Refresh from '@/components/refresh'
-import DeleteAll from '@/components/deleteallmodal'
+import Refresh from '@/components/refreshQuotes'
+import DeleteAll from '@/components/deleteAllQuotes'
 import Quotes from '@/components/quotes'
 import Header from '@/components/header'
-import Filter from '@/components/filter'
-import Sort from '@/components/sort'
+import Filter from '@/components/filterQuotes'
+import Sort from '@/components/sortQuotes'
 import { getData } from '@/utils/handleDatabase'
 
 export default async function Home() {
 	let data = await getData()
-	/* data.sort((a, b) => a.id - b.id) */
 	return (
 		<div className="bg-slate-950 min-h-dvh">
 			<Header currentPage="/" />
 			<div className="mt-10 sm:mt-8 divide-y divide-white/5">
-				<div className="absolute sm:fixed bg-slate-900 grid grid-cols-1 gap-x-8 gap-y-10 px-6 py-10 md:grid-cols-3 sm:px-8 z-30 w-full">
+				<div className="relative sm:fixed bg-slate-900 grid grid-cols-1 gap-x-8 gap-y-10 px-6 py-10 md:grid-cols-3 sm:px-8 z-30 w-full">
 					<div className="md:col-span-4 text-white">
 						<div className="mt-4 grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-5">
 							<div className="sm:col-span-6">
@@ -33,7 +32,7 @@ export default async function Home() {
 						</div>
 					</div>
 				</div>
-				<div className="pt-[27rem] sm:pt-64">
+				<div className="pt-0 sm:pt-64">
 					<Quotes data={data} />
 				</div>
 			</div>

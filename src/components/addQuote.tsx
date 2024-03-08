@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { create } from '@/app/actions'
 
-export default function CreateQuote({ data }: { data: any[] }) {
+export default function CreateQuote() {
 	const [author, setAuthor] = useState('')
 	const [quote, setQuote] = useState('')
 	const [status, setStatus] = useState<string | null>(null)
@@ -25,7 +25,7 @@ export default function CreateQuote({ data }: { data: any[] }) {
 			<div className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-10 sm:px-6 md:grid-cols-3 lg:px-8">
 				<div>
 					<h2 className="text-lg font-semibold leading-7 text-white">
-						Create Quote ({data.length})
+						Create Quote
 					</h2>
 					<p className="mt-1 text-sm leading-6 text-gray-400">
 						Insert an author and quote.

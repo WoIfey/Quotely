@@ -1,7 +1,7 @@
 'use client'
-import Delete from '@/components/deletemodal'
-import Update from '@/components/updatemodal'
-import Copy from '@/components/copy'
+import Delete from '@/components/deleteQuote'
+import Update from '@/components/editQuote'
+import Copy from '@/components/copyQuote'
 import Likes from '@/components/likes'
 import { useEffect, useState } from 'react'
 
