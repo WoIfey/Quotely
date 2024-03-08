@@ -107,10 +107,8 @@ export default function UpdateModal({
 												onChange={e => setAuthor(e.target.value)}
 												required
 												placeholder="Martin Luther King Jr."
-												className={`outline-none block w-full rounded-md border-0 bg-white/10 p-2.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6 ${
-													author.length === 40
-														? 'ring-red-500 ring-2 focus:ring-red-700'
-														: ''
+												className={`outline-none block w-full rounded-md border-0 bg-white/10 p-2.5 text-white shadow-sm ring-1 ring-inset focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6 ${
+													author.length === 40 ? 'ring-red-500 focus:ring-red-700' : ''
 												}`}
 											/>
 											<div className="text-white mt-2 text-xs">
@@ -134,10 +132,8 @@ export default function UpdateModal({
 												onChange={e => setQuote(e.target.value)}
 												required
 												placeholder="Something meaningful..."
-												className={`mt-2 min-h-28 max-h-40 outline-none block w-full rounded-md border-0 bg-white/10 p-2.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6 ${
-													quote.length === 255
-														? 'ring-red-500 ring-2 focus:ring-red-700'
-														: ''
+												className={`mt-2 min-h-28 max-h-40 outline-none block w-full rounded-md border-0 bg-white/10 p-2.5 text-white shadow-sm ring-1 ring-inset focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6 ${
+													quote.length === 255 ? 'ring-red-500 focus:ring-red-700' : ''
 												}`}
 											/>
 											<div className="text-white mt-2 text-xs">
