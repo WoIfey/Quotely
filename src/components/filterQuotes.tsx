@@ -26,7 +26,7 @@ export default function Filter() {
 				htmlFor="filter"
 				className="px-1.5 py-1 sm:py-0.5 text-white rounded-md bg-gray-700 text-sm shadow-sm"
 			>
-				Filter
+				Filter by
 			</label>
 			<select
 				id="filter"
@@ -35,9 +35,9 @@ export default function Filter() {
 				onChange={handleFilterChange}
 				className="bg-slate-700 mt-2 block w-full rounded-md border-0 py-1.5 sm:py-1 px-0.5 ring-1 ring-inset outline-none focus:ring-2 ring-slate-500 focus:ring-indigo-600 sm:text-sm sm:leading-6"
 			>
-				<option value="">Filter by default</option>
-				<option value="liked">Filter by likes</option>
-				<option value="disliked">Filter by dislikes</option>
+				<option value="">Default</option>
+				<option value="likes">Likes</option>
+				<option value="dislikes">Dislikes</option>
 			</select>
 			<form action={refresh}>
 				<button

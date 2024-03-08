@@ -26,7 +26,7 @@ export default function Sort() {
 				htmlFor="sort"
 				className="px-1.5 py-1 sm:py-0.5 text-white rounded-md bg-gray-700 text-sm shadow-sm"
 			>
-				Sort
+				Sort by
 			</label>
 			<select
 				id="sort"
@@ -35,11 +35,11 @@ export default function Sort() {
 				onChange={handleSortChange}
 				className="bg-slate-700 mt-2 block w-full rounded-md border-0 py-1 px-0.5 ring-1 ring-inset outline-none focus:ring-2 ring-slate-500 focus:ring-indigo-600 sm:text-sm sm:leading-6"
 			>
-				<option value="">Sort by default</option>
-				<option value="new">Sort by newest</option>
-				<option value="old">Sort by oldest</option>
-				<option value="most">Sort by most likes</option>
-				<option value="least">Sort by least likes</option>
+				<option value="">Default</option>
+				<option value="new">Newest</option>
+				<option value="old">Oldest</option>
+				<option value="most">Most likes</option>
+				<option value="least">Least likes</option>
 			</select>
 			<form action={refresh}>
 				<button

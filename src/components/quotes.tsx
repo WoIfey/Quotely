@@ -24,9 +24,9 @@ export default function quotes({ data }: { data: any[] }) {
 			sortedData.sort((a: any, b: any) => b.likes - a.likes)
 		}
 
-		if (filterPreference === 'liked') {
+		if (filterPreference === 'likes') {
 			sortedData = sortedData.filter(quote => !/^-/.test(quote.likes))
-		} else if (filterPreference === 'disliked') {
+		} else if (filterPreference === 'dislikes') {
 			sortedData = sortedData.filter(quote => /^-/.test(quote.likes))
 		}
 
