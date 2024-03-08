@@ -15,14 +15,14 @@ export default function CreateQuote() {
 			setStatus('Quote added!')
 			setTimeout(() => {
 				setStatus('')
-			}, 3000)
+			}, 300000)
 		} catch (error) {
 			setStatus('Failed to add quote.')
 		}
 	}
 	return (
-		<div className="mt-10 xl:mt-12 divide-y divide-white/5 xl:pl-72">
-			<div className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-10 sm:px-6 md:grid-cols-3 lg:px-8">
+		<div className="sm:mt-12 divide-y divide-white/5 xl:pl-72">
+			<div className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 pt-5 sm:py-10 sm:px-6 md:grid-cols-3 lg:px-8">
 				<div>
 					<h2 className="text-lg font-semibold leading-7 text-white">
 						Create Quote
@@ -96,7 +96,7 @@ export default function CreateQuote() {
 								<button
 									onMouseEnter={() => setCreatedHover(true)}
 									onMouseLeave={() => setCreatedHover(false)}
-									className="px-3 py-2 text-white rounded-md bg-indigo-600 text-sm font-semibold shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+									className="px-3 sm:px-4 py-3 sm:py-2 w-full sm:w-auto text-white rounded-md bg-indigo-600 text-sm font-semibold shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
 								>
 									Add Quote
 								</button>
@@ -108,7 +108,7 @@ export default function CreateQuote() {
 									className={`pointer-events-none transition-opacity bg-gray-700 text-white px-2 py-1 text-xs rounded-md absolute   
                             -translate-x-1/2 -translate-y-16 ${
 																													createdHover ? 'opacity-100' : 'opacity-0'
-																												} m-4 mx-auto -top-5 left-12 min-w-max transform`}
+																												} m-4 mx-auto top-14 left-12 sm:-top-5 sm:left-[3.2rem] min-w-max transform`}
 								>
 									{status}
 								</span>

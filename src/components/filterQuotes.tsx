@@ -24,7 +24,7 @@ export default function Filter() {
 		<div className="sm:col-span-2">
 			<label
 				htmlFor="filter"
-				className="px-1.5 py-1 sm:py-0.5 text-white rounded-md bg-gray-700 text-lg sm:text-sm shadow-sm"
+				className="px-1.5 py-1 sm:py-0.5 text-white rounded-md bg-gray-700 text-sm shadow-sm"
 			>
 				Filter
 			</label>
