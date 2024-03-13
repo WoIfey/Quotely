@@ -23,7 +23,7 @@ export default function refreshComponent() {
 				<div className="relative group flex text-[10px] font-medium z-20">
 					<span
 						className={`pointer-events-none transition-opacity bg-gray-700 px-2 py-1 text-xs rounded-md absolute   
-                            -translate-x-3/4 -translate-y-16 ${
+                            -translate-x-3/4 translate-y-2 ${
 																													refreshHover ? 'opacity-100' : 'opacity-0'
 																												} m-4 mx-auto top-1/2 left-1/2 min-w-max transform`}
 					>
