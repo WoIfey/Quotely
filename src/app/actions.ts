@@ -23,7 +23,7 @@ export const remove = async (formData: FormData) => {
     revalidatePath('/')
 }
 
-export const removeall = async () => {
+export const removeAll = async () => {
     await deleteAllData()
     revalidatePath('/')
 }

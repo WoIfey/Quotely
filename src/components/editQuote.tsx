@@ -102,11 +102,11 @@ export default function UpdateModal({
 												type="text"
 												id="author"
 												name="author"
+												placeholder="William Shakespeare"
 												maxLength={40}
 												value={author}
 												onChange={e => setAuthor(e.target.value)}
 												required
-												placeholder="Martin Luther King Jr."
 												className={`outline-none block w-full rounded-md border-0 bg-white/10 p-2.5 text-white shadow-sm ring-1 ring-inset focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6 ${
 													author.length === 40 ? 'ring-red-500 focus:ring-red-700' : ''
 												}`}
@@ -127,11 +127,15 @@ export default function UpdateModal({
 											<textarea
 												id="quote"
 												name="quote"
+												placeholder="“Better three hours too soon than a minute too late.”"
 												maxLength={255}
 												value={quote}
-												onChange={e => setQuote(e.target.value)}
-												required
-												placeholder="Something meaningful..."
+												onChange={e => {
+													const newValue = e.target.value
+													if (!newValue.includes('"')) {
+														setQuote(newValue)
+													}
+												}}
 												className={`mt-2 min-h-28 max-h-40 outline-none block w-full rounded-md border-0 bg-white/10 p-2.5 text-white shadow-sm ring-1 ring-inset focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6 ${
 													quote.length === 255 ? 'ring-red-500 focus:ring-red-700' : ''
 												}`}

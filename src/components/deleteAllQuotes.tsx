@@ -1,11 +1,13 @@
 'use client'
 import { useState } from 'react'
-import { removeall } from '@/app/actions'
+import { removeAll } from '@/app/actions'
 import Image from 'next/image'
 
 export default function DeleteModal() {
 	const [toggleModal, setToggleModal] = useState(false)
 	const [deleteAllHover, setDeleteAllHover] = useState(false)
+	const [password, setPassword] = useState('')
+	const [text, setText] = useState('Yes, delete EVERYTHING!')
 
 	const showModal = () => {
 		setToggleModal(true)
@@ -16,7 +18,17 @@ export default function DeleteModal() {
 	}
 
 	const confirm = () => {
-		setToggleModal(false)
+		if (
+			password === 'wowyoufoundthepasswordnowyoucandeleteallthequotesthatsawesome!'
+		) {
+			setToggleModal(false)
+			removeAll()
+		} else {
+			setText('Incorrect Password!')
+			setTimeout(() => {
+				setText('Yes, delete EVERYTHING!')
+			}, 2000)
+		}
 	}
 	return (
 		<>
@@ -55,15 +67,22 @@ export default function DeleteModal() {
 										Do you really want to delete{' '}
 										<span className="font-extrabold tracking-widest">ALL</span> quotes?
 									</h3>
+									<input
+										type="password"
+										value={password}
+										onChange={e => setPassword(e.target.value)}
+										className="mb-4 outline-none block w-full rounded-md border-0 bg-white/10 p-2.5 text-white shadow-sm ring-1 ring-inset focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+										placeholder="Enter secret password"
+									/>
 									<div className="flex justify-center items-center">
-										<form onSubmit={() => confirm()} action={removeall}>
-											<button
-												type="submit"
-												className="h-10 rounded-md bg-red-600 px-3.5 py-2.5 text-sm font-semibold shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 me-2"
-											>
-												Yes, do it!
-											</button>
-										</form>
+										<button
+											onClick={confirm}
+											type="button"
+											className="h-10 rounded-md bg-red-600 px-3.5 py-2.5 text-sm font-semibold shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 me-2"
+										>
+											{text}
+										</button>
+
 										<button
 											onClick={cancel}
 											type="button"

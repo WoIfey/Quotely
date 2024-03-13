@@ -20,9 +20,10 @@ export default function CreateQuote() {
 			setStatus('Failed to add quote.')
 		}
 	}
+
 	return (
-		<div className="sm:mt-12 divide-y divide-white/5 xl:pl-72">
-			<div className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 pt-5 sm:py-10 sm:px-6 md:grid-cols-3 lg:px-8">
+		<div className="pt-6 sm:pt-20">
+			<div className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-9 md:grid-cols-3">
 				<div>
 					<h2 className="text-lg font-semibold leading-7 text-white">
 						Create Quote
@@ -47,7 +48,7 @@ export default function CreateQuote() {
 										type="text"
 										id="author"
 										name="author"
-										placeholder="Martin Luther King Jr."
+										placeholder="William Shakespeare"
 										maxLength={40}
 										value={author}
 										onChange={e => setAuthor(e.target.value)}
@@ -75,10 +76,15 @@ export default function CreateQuote() {
 									<textarea
 										id="quote"
 										name="quote"
-										placeholder="Something meaningful..."
+										placeholder="“Better three hours too soon than a minute too late.”"
 										maxLength={255}
 										value={quote}
-										onChange={e => setQuote(e.target.value)}
+										onChange={e => {
+											const newValue = e.target.value
+											if (!newValue.includes('"')) {
+												setQuote(newValue)
+											}
+										}}
 										required
 										className={`min-h-28 max-h-40 outline-none block w-full rounded-md border-0 bg-white/10 p-2.5 text-white shadow-sm ring-1 ring-inset focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6 ${
 											quote.length === 255 ? 'ring-red-500 focus:ring-red-700' : ''

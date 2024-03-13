@@ -3,6 +3,10 @@ import Delete from '@/components/deleteQuote'
 import Update from '@/components/editQuote'
 import Copy from '@/components/copyQuote'
 import Likes from '@/components/likes'
+import Refresh from '@/components/refreshQuotes'
+import DeleteAll from '@/components/deleteAllQuotes'
+import Filter from '@/components/filterQuotes'
+import Sort from '@/components/sortQuotes'
 import { useEffect, useState } from 'react'
 
 export default function quotes({ data }: { data: any[] }) {
@@ -34,7 +38,27 @@ export default function quotes({ data }: { data: any[] }) {
 	}, [data])
 	return (
 		<>
-			<div className="text-white sm:p-8 p-4 grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+			<div className="sm:fixed bg-slate-900 grid grid-cols-1 px-6 sm:mt-[55px] pb-6 py-2 md:grid-cols-3 sm:px-8 z-30 w-full">
+				<div className="md:col-span-4 text-white">
+					<div className="mt-4 grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-5">
+						<div className="sm:col-span-6">
+							<div className="flex items-center sm:flex-row flex-col gap-4">
+								<h2 className="text-3xl font-bold leading-7 tracking-widest italic">
+									QUOTES{' '}
+									<span className="not-italic tracking-normal">({quotes.length})</span>
+								</h2>
+								<div className="flex gap-3">
+									<Refresh />
+									<DeleteAll />
+								</div>
+							</div>
+						</div>
+						<Sort />
+						<Filter />
+					</div>
+				</div>
+			</div>
+			<div className="sm:pt-72 text-white sm:p-8 p-4 grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
 				{quotes.length === 0 && (
 					<p className="italic text-gray-400">There are currently no quotes!</p>
 				)}
@@ -44,7 +68,7 @@ export default function quotes({ data }: { data: any[] }) {
 						className="relative flex flex-col bg-slate-800 rounded-lg p-4"
 					>
 						<div className="flex flex-col justify-between gap-1.5">
-							<div className="text-lg italic break-all">"{q.quote}"</div>
+							<div className="text-lg italic break-all">“{q.quote}”</div>
 							<div className="text-base font-thin text-end break-all">
 								— {q.author}
 							</div>
