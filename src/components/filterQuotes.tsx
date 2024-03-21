@@ -1,6 +1,6 @@
 'use client'
-import { useState, useEffect } from 'react'
 import { refresh } from '@/app/actions'
+import { useState, useEffect } from 'react'
 
 export default function Filter() {
 	const [filterPreference, setFilterPreference] = useState('')
