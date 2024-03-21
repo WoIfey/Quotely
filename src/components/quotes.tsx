@@ -8,6 +8,7 @@ import DeleteAll from '@/components/deleteAllQuotes'
 import Filter from '@/components/filterQuotes'
 import Sort from '@/components/sortQuotes'
 import { useEffect, useState } from 'react'
+import { refresh } from '@/app/actions'
 
 export default function quotes({ data }: { data: any[] }) {
 	const [quotes, setQuotes] = useState(data)
@@ -37,6 +38,14 @@ export default function quotes({ data }: { data: any[] }) {
 		setQuotes(sortedData)
 		setIsLoading(false)
 	}, [data])
+
+	useEffect(() => {
+		const timer = setInterval(() => {
+			refresh()
+		}, 7500)
+
+		return () => clearInterval(timer)
+	}, [])
 
 	if (isLoading) {
 		return (
@@ -70,8 +79,19 @@ export default function quotes({ data }: { data: any[] }) {
 				<div className="flex items-center sm:flex-row flex-col gap-4 justify-between">
 					<div className="flex flex-col justify-center items-center sm:justify-normal sm:items-start gap-3">
 						<h2 className="text-3xl font-bold leading-7 tracking-widest italic">
-							QUOTES{' '}
-							<span className="not-italic tracking-normal">({quotes.length})</span>
+							QUOTELY
+							<span className="not-italic group tracking-normal cursor-default">
+								{' '}
+								({quotes.length})
+								<div className="relative flex text-[10px] font-medium z-20">
+									<span
+										className="pointer-events-none group-hover:opacity-100 transition-opacity bg-gray-700 px-2 py-1 text-xs rounded-md absolute  
+  translate-x-12 -translate-y-3 opacity-0 m-4 mx-auto top-1/2 left-1/2 min-w-max transform"
+									>
+										{quotes.length} Quotes
+									</span>
+								</div>
+							</span>
 						</h2>
 						<div className="flex gap-3">
 							<Refresh />
