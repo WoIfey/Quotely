@@ -120,15 +120,15 @@ export default function quotes({ data }: { data: any[] }) {
 									— {q.author}
 								</p>
 							</div>
-							<div className="group flex min-[300px]:flex-row flex-col sm:items-end mt-3 gap-1.5 justify-between">
-								<Likes id={q.id} likes={q.likes} />
-								<div className="flex items-end gap-1.5">
-									<Copy quote={q.quote} id={q.id} />
-									<Delete id={q.id} />
-									<Update quote={q.quote} author={q.author} id={q.id} />
-								</div>
-								<span className="absolute inset-0" />
+						</div>
+						<div className="group flex min-[300px]:flex-row flex-col sm:items-end mt-2 gap-1.5 justify-between">
+							<Likes id={q.id} likes={q.likes} />
+							<div className="flex items-end gap-1.5">
+								<Copy quote={q.quote} id={q.id} />
+								<Delete id={q.id} />
+								<Update quote={q.quote} author={q.author} id={q.id} />
 							</div>
+							<span className="absolute inset-0" />
 						</div>
 						<div className="flex gap-1 mt-2">
 							<div className="text-xs font-extralight bg-slate-900 rounded px-1">

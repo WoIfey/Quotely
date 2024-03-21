@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
 	title: 'Quotely',
-	description: 'Create quotes made with next.js!',
+	description: 'Create your own quotes! | Project created with next.js!',
 }
 
 export default function RootLayout({
