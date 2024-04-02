@@ -40,11 +40,11 @@ export default function Likes({ id, likes }: { id: string; likes: number }) {
 				</span>
 				<span
 					className={`pointer-events-none transition-opacity bg-gray-700 px-2 py-1 text-xs rounded-md absolute   
-					-translate-x-1/2 -translate-y-[3.7rem] ${
+					-translate-x-1/2 -translate-y-[4.7rem] flex flex-col items-center ${
 						likesHover ? 'opacity-100' : 'opacity-0'
 					} m-4 mx-auto top-1/2 left-1/2 min-w-max transform`}
 				>
-					{likes} Likes
+					{likes} <span>{likes === 1 || likes === -1 ? 'Like' : 'Likes'}</span>
 				</span>
 			</div>
 			<div className="hidden group-hover:block">
