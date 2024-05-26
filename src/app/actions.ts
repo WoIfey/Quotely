@@ -1,12 +1,13 @@
 "use server"
-import { deleteData, saveData, updateData, deleteAllData, incrementLikes, decrementLikes } from "@/utils/handleDatabase"
+import { deleteData, saveData, updateData, incrementLikes, decrementLikes } from "@/utils/handleDatabase"
 import { revalidatePath } from "next/cache"
+import { redirect } from "next/navigation"
 
 export const create = async (formData: FormData) => {
     const quote = formData.get('quote') as string
     const author = formData.get('author') as string
     await saveData(quote, author)
-    revalidatePath('/')
+    redirect('/')
 }
 
 export const update = async (formData: FormData) => {
@@ -23,21 +24,14 @@ export const remove = async (formData: FormData) => {
     revalidatePath('/')
 }
 
-export const removeAll = async () => {
-    await deleteAllData()
-    revalidatePath('/')
-}
-
 export const refresh = async () => {
     revalidatePath('/')
 }
 
 export const likeQuote = async (id: string) => {
     await incrementLikes(id)
-    revalidatePath('/')
 }
 
 export const dislikeQuote = async (id: string) => {
     await decrementLikes(id)
-    revalidatePath('/')
 }

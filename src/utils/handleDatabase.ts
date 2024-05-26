@@ -35,16 +35,6 @@ export async function deleteData(id: string) {
     }
 }
 
-export async function deleteAllData() {
-    try {
-        await db.query("DELETE FROM quotes")
-        return 'Deleted All Quotes'
-    } catch (error) {
-        console.log(error)
-        return 'Something went wrong'
-    }
-}
-
 export async function incrementLikes(id: string) {
     try {
         await db.query("UPDATE quotes SET likes = likes + 1 WHERE id = $1", [id])

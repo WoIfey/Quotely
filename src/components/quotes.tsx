@@ -3,12 +3,9 @@ import Delete from '@/components/deleteQuote'
 import Update from '@/components/editQuote'
 import Copy from '@/components/copyQuote'
 import Likes from '@/components/likes'
-import Refresh from '@/components/refreshQuotes'
-import DeleteAll from '@/components/deleteAllQuotes'
 import Filter from '@/components/filterQuotes'
 import Sort from '@/components/sortQuotes'
 import { useEffect, useState } from 'react'
-import { refresh } from '@/app/actions'
 
 export default function quotes({ data }: { data: any[] }) {
 	const [quotes, setQuotes] = useState(data)
@@ -38,14 +35,6 @@ export default function quotes({ data }: { data: any[] }) {
 		setQuotes(sortedData)
 		setIsLoading(false)
 	}, [data])
-
-	useEffect(() => {
-		const timer = setInterval(() => {
-			refresh()
-		}, 7500)
-
-		return () => clearInterval(timer)
-	}, [])
 
 	if (isLoading) {
 		return (
@@ -93,10 +82,6 @@ export default function quotes({ data }: { data: any[] }) {
 								</div>
 							</span>
 						</h2>
-						<div className="flex gap-3">
-							<Refresh />
-							<DeleteAll />
-						</div>
 					</div>
 					<div className="flex flex-col w-full sm:flex-row sm:w-auto gap-6 sm:gap-3">
 						<Sort />
@@ -104,7 +89,7 @@ export default function quotes({ data }: { data: any[] }) {
 					</div>
 				</div>
 			</div>
-			<div className="sm:pt-52 text-white sm:p-8 sm:pb-6 p-4 grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+			<div className="sm:pt-44 text-white sm:p-8 sm:pb-6 p-4 grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
 				{quotes.length === 0 && (
 					<p className="italic text-gray-400">There are currently no quotes!</p>
 				)}

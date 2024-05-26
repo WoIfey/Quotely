@@ -12,10 +12,6 @@ export default function CreateQuote() {
 		try {
 			setAuthor('')
 			setQuote('')
-			setStatus('Quote added!')
-			setTimeout(() => {
-				setStatus('')
-			}, 3000)
 		} catch (error) {
 			setStatus('Failed to add quote.')
 		}
