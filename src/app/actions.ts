@@ -30,8 +30,10 @@ export const refresh = async () => {
 
 export const likeQuote = async (id: string) => {
     await incrementLikes(id)
+    revalidatePath('/')
 }
 
 export const dislikeQuote = async (id: string) => {
     await decrementLikes(id)
+    revalidatePath('/')
 }

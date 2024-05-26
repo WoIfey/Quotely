@@ -1,23 +1,19 @@
 'use client'
 import { dislikeQuote, likeQuote } from '@/app/actions'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 export default function Likes({ id, likes }: { id: string; likes: number }) {
 	const [likesHover, setLikesHover] = useState(false)
 	const [likeHover, setLikeHover] = useState(false)
 	const [DislikesHover, setDislikesHover] = useState(false)
-	const router = useRouter()
 
 	const handleLike = async () => {
 		await likeQuote(id)
-		router.refresh()
 	}
 
 	const handleDislike = async () => {
 		await dislikeQuote(id)
-		router.refresh()
 	}
 
 	return (
