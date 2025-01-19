@@ -23,7 +23,7 @@ export async function updateData(id: number, author: string, quote: string) {
     try {
         await prisma.quotes.update({
             where: { id },
-            data: { author, quote }
+            data: { author, quote, updatedAt: new Date() }
         })
         return 'Updated Quote'
     } catch (error) {
