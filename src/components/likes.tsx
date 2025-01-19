@@ -9,11 +9,11 @@ export default function Likes({ id, likes }: { id: string; likes: number }) {
 	const [DislikesHover, setDislikesHover] = useState(false)
 
 	const handleLike = async () => {
-		await likeQuote(id)
+		await likeQuote(Number(id))
 	}
 
 	const handleDislike = async () => {
-		await dislikeQuote(id)
+		await dislikeQuote(Number(id))
 	}
 
 	return (

@@ -13,6 +13,7 @@ export default function CreateQuote() {
 			setAuthor('')
 			setQuote('')
 		} catch (error) {
+			console.log(error)
 			setStatus('Failed to add quote.')
 		}
 	}

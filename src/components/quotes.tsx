@@ -7,7 +7,16 @@ import Filter from '@/components/filterQuotes'
 import Sort from '@/components/sortQuotes'
 import { useEffect, useState } from 'react'
 
-export default function quotes({ data }: { data: any[] }) {
+interface Quote {
+	id: number
+	quote: string
+	author: string
+	likes: number
+	createdAt: Date
+	updatedAt: Date
+}
+
+export default function Quotes({ data }: { data: Quote[] }) {
 	const [quotes, setQuotes] = useState(data)
 	const [isLoading, setIsLoading] = useState(true)
 
@@ -18,19 +27,19 @@ export default function quotes({ data }: { data: any[] }) {
 		let sortedData = [...data]
 
 		if (sortPreference === 'new') {
-			sortedData.sort((a: any, b: any) => b.id - a.id)
+			sortedData.sort((a, b) => b.id - a.id)
 		} else if (sortPreference === 'old') {
-			sortedData.sort((a: any, b: any) => a.id - b.id)
+			sortedData.sort((a, b) => a.id - b.id)
 		} else if (sortPreference === 'least') {
-			sortedData.sort((a: any, b: any) => a.likes - b.likes)
+			sortedData.sort((a, b) => a.likes - b.likes)
 		} else if (sortPreference === 'most') {
-			sortedData.sort((a: any, b: any) => b.likes - a.likes)
+			sortedData.sort((a, b) => b.likes - a.likes)
 		}
 
 		if (filterPreference === 'likes') {
-			sortedData = sortedData.filter(quote => !/^-/.test(quote.likes))
+			sortedData = sortedData.filter(quote => !/^-/.test(quote.likes.toString()))
 		} else if (filterPreference === 'dislikes') {
-			sortedData = sortedData.filter(quote => /^-/.test(quote.likes))
+			sortedData = sortedData.filter(quote => /^-/.test(quote.likes.toString()))
 		}
 		setQuotes(sortedData)
 		setIsLoading(false)
@@ -107,7 +116,7 @@ export default function quotes({ data }: { data: any[] }) {
 							</div>
 						</div>
 						<div className="group flex min-[300px]:flex-row flex-col sm:items-end mt-2 gap-1.5 justify-between">
-							<Likes id={q.id} likes={q.likes} />
+							<Likes id={q.id.toString()} likes={q.likes} />
 							<div className="flex items-end gap-1.5">
 								<Copy quote={q.quote} id={q.id} />
 								<Delete id={q.id} />

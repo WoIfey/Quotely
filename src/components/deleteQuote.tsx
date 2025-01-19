@@ -63,7 +63,7 @@ export default function DeleteModal({ id }: { id: number }) {
 												type="submit"
 												className="h-10 rounded-md bg-red-600 px-3.5 py-2.5 text-sm font-semibold shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 me-2"
 											>
-												Yes, I'm sure
+												Yes, I&apos;m sure
 											</button>
 										</form>
 										<button

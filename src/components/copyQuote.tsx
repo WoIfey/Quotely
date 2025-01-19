@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 
-export default function copy({
+export default function Copy({
 	quote: initialQuote,
 	id,
 }: {

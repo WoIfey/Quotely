@@ -1,9 +1,9 @@
 import Quotes from '@/components/quotes'
 import Header from '@/components/header'
-import { getData } from '@/utils/handleDatabase'
+import { getData } from './data'
 
 export default async function Home() {
-	let data = await getData()
+	const data = await getData()
 	return (
 		<div className="bg-slate-950 min-h-dvh">
 			<Header currentPage="/" />
