@@ -1,85 +1,64 @@
 'use client'
-import Image from 'next/image'
+import { Trash2 } from 'lucide-react'
 import { useState } from 'react'
-import { remove } from '@/app/actions'
+import { deleteData } from '@/app/actions'
+import { Button } from './ui/button'
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+	AlertDialogTrigger,
+} from './ui/alert-dialog'
 
-export default function DeleteModal({ id }: { id: number }) {
-	const [deleteHover, setDeleteHover] = useState(false)
-	const [toggleModal, setToggleModal] = useState(false)
+export default function DeleteModal({
+	id,
+	onDelete,
+}: {
+	id: number
+	onDelete: () => void
+}) {
+	const [isOpen, setIsOpen] = useState(false)
 
-	const showModal = () => {
-		setToggleModal(true)
+	const remove = async (formData: FormData) => {
+		const id = Number(formData.get('id'))
+		await deleteData(id)
+		onDelete()
+		setIsOpen(false)
 	}
 
-	const cancel = () => {
-		setToggleModal(false)
-	}
-
-	const confirm = () => {
-		setToggleModal(false)
-	}
 	return (
-		<>
-			<div className="hidden group-hover:block z-10">
-				<button
-					onClick={showModal}
-					onMouseEnter={() => setDeleteHover(true)}
-					onMouseLeave={() => setDeleteHover(false)}
-					className="flex items-center justify-center h-8 w-8 rounded-md bg-red-600 text-sm font-semibold shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
-				>
-					<div className="relative group flex text-[10px] font-medium z-20">
-						<Image
-							src="/trash.svg"
-							alt="Delete"
-							width={32}
-							height={32}
-							className="p-1"
-						/>
-						<span
-							className={`pointer-events-none transition-opacity bg-gray-700 px-2 py-1 text-xs rounded-md absolute   
-                            -translate-x-1/2 -translate-y-[3.7rem] ${
-																													deleteHover ? 'opacity-100' : 'opacity-0'
-																												} m-4 mx-auto top-1/2 left-1/2 min-w-max transform`}
+		<AlertDialog open={isOpen} onOpenChange={setIsOpen}>
+			<AlertDialogTrigger>
+				<Button variant="destructive" size="icon" className="h-8 w-8">
+					<Trash2 className="h-4 w-4" />
+				</Button>
+			</AlertDialogTrigger>
+
+			<AlertDialogContent>
+				<AlertDialogHeader>
+					<AlertDialogTitle>Are you sure?</AlertDialogTitle>
+					<AlertDialogDescription>
+						This action cannot be undone. This will permanently delete this quote.
+					</AlertDialogDescription>
+				</AlertDialogHeader>
+				<AlertDialogFooter>
+					<AlertDialogCancel>Cancel</AlertDialogCancel>
+					<form action={remove}>
+						<input type="hidden" name="id" value={id} />
+						<AlertDialogAction
+							type="submit"
+							className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
 						>
 							Delete
-						</span>
-					</div>
-				</button>
-			</div>
-			{toggleModal && (
-				<>
-					<div className="z-50 fixed inset-0 bg-black opacity-90"></div>
-					<div className="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full inset-0">
-						<div className="relative p-4 w-full max-w-md max-h-full">
-							<div className="relative bg-white rounded-lg shadow dark:bg-gray-900">
-								<div className="p-4 md:p-5 text-center">
-									<h3 className="mb-3 text-lg font-normal text-white">
-										Are you sure you want to delete this quote?
-									</h3>
-									<div className="flex justify-center items-center">
-										<form onSubmit={() => confirm()} action={remove}>
-											<input name="id" type="hidden" value={id} />
-											<button
-												type="submit"
-												className="h-10 rounded-md bg-red-600 px-3.5 py-2.5 text-sm font-semibold shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 me-2"
-											>
-												Yes, I&apos;m sure
-											</button>
-										</form>
-										<button
-											onClick={cancel}
-											type="button"
-											className="h-10 rounded-md bg-gray-600 px-3.5 py-2.5 text-sm font-semibold shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
-										>
-											No, cancel
-										</button>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</>
-			)}
-		</>
+						</AlertDialogAction>
+					</form>
+				</AlertDialogFooter>
+			</AlertDialogContent>
+		</AlertDialog>
 	)
 }

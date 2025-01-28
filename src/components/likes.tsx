@@ -1,104 +1,118 @@
 'use client'
-import { dislikeQuote, likeQuote } from '@/app/actions'
-import Image from 'next/image'
-import { useState } from 'react'
+import { incrementLikes, decrementLikes, getUserVote } from '@/app/actions'
+import { ArrowUp, ArrowDown } from 'lucide-react'
+import { Button } from './ui/button'
+import { authClient } from '@/lib/auth-client'
+import { useEffect, useState } from 'react'
+import { toast } from 'sonner'
 
-export default function Likes({ id, likes }: { id: string; likes: number }) {
-	const [likesHover, setLikesHover] = useState(false)
-	const [likeHover, setLikeHover] = useState(false)
-	const [DislikesHover, setDislikesHover] = useState(false)
+export default function Likes({
+	id,
+	likes,
+	onLikesUpdate,
+}: {
+	id: string
+	likes: number
+	onLikesUpdate: (newLikes: number) => void
+}) {
+	const { data: session } = authClient.useSession()
+	const [userVote, setUserVote] = useState(0)
+
+	useEffect(() => {
+		const fetchUserVote = async () => {
+			if (session?.user?.id) {
+				const vote = await getUserVote(Number(id), session.user.id)
+				setUserVote(vote)
+			}
+		}
+		fetchUserVote()
+	}, [id, session?.user?.id])
 
 	const handleLike = async () => {
-		await likeQuote(Number(id))
+		if (!session?.user?.id) {
+			toast.error('Please sign in to like quotes')
+			return
+		}
+
+		const result = await incrementLikes(Number(id), session.user.id)
+		if (result?.likes !== undefined) {
+			onLikesUpdate(result.likes)
+			if (userVote === 1) {
+				setUserVote(0)
+			} else if (userVote === -1) {
+				setUserVote(1)
+			} else {
+				setUserVote(1)
+			}
+		}
 	}
 
 	const handleDislike = async () => {
-		await dislikeQuote(Number(id))
+		if (!session?.user?.id) {
+			toast.error('Please sign in to dislike quotes')
+			return
+		}
+
+		const result = await decrementLikes(Number(id), session.user.id)
+		if (result?.likes !== undefined) {
+			onLikesUpdate(result.likes)
+			if (userVote === -1) {
+				setUserVote(0)
+			} else if (userVote === 1) {
+				setUserVote(-1)
+			} else {
+				setUserVote(-1)
+			}
+		}
+	}
+
+	const formatLikes = (value: number) => {
+		if (value >= 10000) return `${Math.floor(value / 1000)}k`
+		if (value >= 1000)
+			return `${Math.floor(value / 1000)}.${Math.floor((value % 1000) / 100)}k`
+		if (value <= -10000) return `-${Math.floor(Math.abs(value) / 1000)}k`
+		if (value <= -1000)
+			return `-${Math.floor(Math.abs(value) / 1000)}.${Math.floor(
+				(Math.abs(value) % 1000) / 100
+			)}k`
+		return value.toString()
 	}
 
 	return (
-		<div className="flex gap-1.5 z-10">
-			<div className="relative group flex text-[10px] font-medium z-20">
-				<span
-					className={`rounded-md flex justify-center items-center w-8 h-8 text-sm font-semibold shadow-sm cursor-default ${
-						likes < 0 ? 'bg-red-600' : likes > 0 ? 'bg-green-600' : 'bg-gray-600'
-					}`}
-					onMouseEnter={() => setLikesHover(true)}
-					onMouseLeave={() => setLikesHover(false)}
-				>
-					{likes >= 10000
-						? `${Math.floor(likes / 1000)}k`
-						: likes >= 1000
-						? `${Math.floor(likes / 1000)}.${Math.floor((likes % 1000) / 100)}k`
-						: likes <= -10000
-						? `-${Math.floor(Math.abs(likes) / 1000)}k`
-						: likes <= -1000
-						? `-${Math.floor(Math.abs(likes) / 1000)}.${Math.floor(
-								(Math.abs(likes) % 1000) / 100
-						  )}k`
-						: likes}
-				</span>
-				<span
-					className={`pointer-events-none transition-opacity bg-gray-700 px-2 py-1 text-xs rounded-md absolute   
-					-translate-x-1/2 -translate-y-[4.7rem] flex flex-col items-center ${
-						likesHover ? 'opacity-100' : 'opacity-0'
-					} m-4 mx-auto top-1/2 left-1/2 min-w-max transform`}
-				>
-					{likes} <span>{likes === 1 || likes === -1 ? 'Like' : 'Likes'}</span>
-				</span>
+		<div className="flex items-center gap-1.5">
+			<Button
+				size="icon"
+				onClick={handleLike}
+				className={`size-8 ${
+					userVote === 1
+						? 'bg-green-500 hover:bg-green-400'
+						: 'bg-green-600 hover:bg-green-500'
+				}`}
+			>
+				<ArrowUp className="size-4 text-white" />
+			</Button>
+			<div
+				className={`flex h-8 w-14 items-center justify-center rounded-md text-sm font-medium ${
+					likes < 0
+						? 'bg-destructive text-destructive-foreground'
+						: likes > 0
+						? 'bg-green-600 text-green-50'
+						: 'bg-muted text-muted-foreground'
+				}`}
+			>
+				{formatLikes(likes)}
 			</div>
-			<div className="hidden group-hover:block">
-				<div className="flex gap-1.5">
-					<button
-						onMouseEnter={() => setLikeHover(true)}
-						onMouseLeave={() => setLikeHover(false)}
-						onClick={handleLike}
-						className="rounded-md bg-green-600 w-8 h-8 text-sm font-semibold shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
-					>
-						<div className="relative group flex text-[10px] font-medium z-20">
-							<Image
-								src="/thumbs-up.svg"
-								alt="Like"
-								width={32}
-								height={32}
-								className="p-1"
-							/>
-							<span
-								className={`pointer-events-none transition-opacity bg-gray-700 px-2 py-1 text-xs rounded-md absolute   
-                            -translate-x-1/2 -translate-y-[3.7rem] ${
-																													likeHover ? 'opacity-100' : 'opacity-0'
-																												} m-4 mx-auto top-1/2 left-1/2 min-w-max transform`}
-							>
-								Like
-							</span>
-						</div>
-					</button>
-					<button
-						onMouseEnter={() => setDislikesHover(true)}
-						onMouseLeave={() => setDislikesHover(false)}
-						onClick={handleDislike}
-						className="rounded-md bg-red-600 w-8 h-8 text-sm font-semibold shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
-					>
-						<div className="relative group flex text-[10px] font-medium z-20">
-							<Image
-								src="/thumbs-down.svg"
-								alt="Dislike"
-								width={32}
-								height={32}
-								className="p-1"
-							/>
-							<span
-								className={`pointer-events-none transition-opacity bg-gray-700 px-2 py-1 text-xs rounded-md absolute   
-                            -translate-x-1/2 -translate-y-[3.7rem] ${
-																													DislikesHover ? 'opacity-100' : 'opacity-0'
-																												} m-4 mx-auto top-1/2 left-1/2 min-w-max transform`}
-							>
-								Dislike
-							</span>
-						</div>
-					</button>
-				</div>
-			</div>
+			<Button
+				size="icon"
+				onClick={handleDislike}
+				className={`size-8 ${
+					userVote === -1
+						? 'bg-red-600 hover:bg-red-500'
+						: 'bg-destructive hover:bg-destructive/90'
+				}`}
+			>
+				<ArrowDown className="size-4 text-white" />
+			</Button>
 		</div>
 	)
 }

@@ -1,13 +1,11 @@
-import Quotes from '@/components/quotes'
-import Header from '@/components/header'
-import { getData } from './data'
+import Quotes from '@/components/Quotes'
+import { getData } from './actions'
 
 export default async function Home() {
 	const data = await getData()
 	return (
-		<div className="bg-slate-950 min-h-dvh">
-			<Header currentPage="/" />
-			<Quotes data={data} />
+		<div className="bg-slate-50 dark:bg-slate-950 min-h-dvh">
+			<Quotes data={data as Quote[]} />
 		</div>
 	)
 }

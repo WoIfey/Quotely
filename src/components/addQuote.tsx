@@ -1,48 +1,91 @@
 'use client'
-import { useState } from 'react'
-import { create } from '@/app/actions'
+import { useState, useTransition } from 'react'
+import { useRouter } from 'next/navigation'
+import { saveData } from '@/app/actions'
+import { authClient } from '@/lib/auth-client'
+import { Button } from './ui/button'
+import { Input } from './ui/input'
+import { Textarea } from './ui/textarea'
+import { Label } from './ui/label'
+import { toast } from 'sonner'
+import { Alert, AlertDescription } from './ui/alert'
+import {
+	Dialog,
+	DialogContent,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+	DialogFooter,
+} from '@/components/ui/dialog'
+import { MessageCirclePlus, Sparkles, QuoteIcon } from 'lucide-react'
+import { motion } from 'motion/react'
+import { cn } from '@/lib/utils'
 
 export default function CreateQuote() {
 	const [author, setAuthor] = useState('')
 	const [quote, setQuote] = useState('')
-	const [status, setStatus] = useState<string | null>(null)
-	const [createdHover, setCreatedHover] = useState(false)
+	const [isPending, startTransition] = useTransition()
+	const [open, setOpen] = useState(false)
+	const router = useRouter()
+	const { data: session } = authClient.useSession()
 
-	const message = () => {
+	const create = async (formData: FormData) => {
 		try {
-			setAuthor('')
-			setQuote('')
+			startTransition(async () => {
+				const quote = formData.get('quote') as string
+				const author = formData.get('author') as string
+				await saveData(quote, author, session?.user?.id as string)
+				toast.success('✨ Quote added successfully!', {
+					description: 'Your quote has been saved and will inspire others.',
+				})
+				setOpen(false)
+				router.refresh()
+				setAuthor('')
+				setQuote('')
+			})
 		} catch (error) {
-			console.log(error)
-			setStatus('Failed to add quote.')
+			console.error(error)
+			toast.error('Failed to add quote. Please try again.')
 		}
 	}
 
 	return (
-		<div className="pt-6 sm:pt-20">
-			<div className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-9 md:grid-cols-3">
-				<div>
-					<h2 className="text-lg font-semibold leading-7 text-white">
-						Create Quote
-					</h2>
-					<p className="mt-1 text-sm leading-6 text-gray-400">
-						Insert an author and quote.
-					</p>
-				</div>
-
-				<div className="md:col-span-2">
-					<form onSubmit={message} action={create}>
-						<div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-3">
-							<div className="sm:col-span-3 sm:w-1/2">
-								<label
-									htmlFor="author"
-									className="block text-base font-medium leading-6 text-white"
+		<div>
+			<Dialog open={open} onOpenChange={setOpen}>
+				<DialogTrigger asChild>
+					<Button
+						variant="ghost"
+						className="[&_svg]:size-6 size-10 relative rounded-full hover:bg-primary/10 hover:text-primary transition-colors"
+					>
+						<MessageCirclePlus className="" />
+						<span className="sr-only">Create new quote</span>
+					</Button>
+				</DialogTrigger>
+				<DialogContent className="sm:max-w-[500px]">
+					<DialogHeader>
+						<DialogTitle className="flex items-center gap-2 text-xl">
+							<Sparkles className="size-5 text-primary" />
+							Create an Inspiring Quote
+						</DialogTitle>
+						<motion.div
+							initial={{ opacity: 0, y: 20 }}
+							animate={{ opacity: 1, y: 0 }}
+							transition={{ duration: 0.3 }}
+						>
+							<form action={create} className="space-y-6 mt-4">
+								<motion.div
+									className="space-y-2"
+									initial={{ opacity: 0, x: -20 }}
+									animate={{ opacity: 1, x: 0 }}
+									transition={{ delay: 0.1 }}
 								>
-									Author
-								</label>
-								<div className="mt-2">
-									<input
-										type="text"
+									<Label
+										htmlFor="author"
+										className="text-sm font-medium  flex items-center gap-2"
+									>
+										Who said it?
+									</Label>
+									<Input
 										id="author"
 										name="author"
 										placeholder="William Shakespeare"
@@ -50,76 +93,105 @@ export default function CreateQuote() {
 										value={author}
 										onChange={e => setAuthor(e.target.value)}
 										required
-										className={`outline-none block w-full rounded-md border-0 bg-white/10 p-2.5 text-white shadow-sm ring-1 ring-inset focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6 ${
-											author.length === 40 ? 'ring-red-500 focus:ring-red-700' : ''
-										}`}
+										className="transition-all duration-200 focus:ring-2 focus:ring-primary/20 text-black dark:text-white"
 									/>
-									<div className="text-white mt-3 text-xs">
-										<span className={`${author.length === 40 ? 'text-red-500' : ''}`}>
-											{author.length}/40
-										</span>
-									</div>
-								</div>
-							</div>
-
-							<div className="col-span-full">
-								<label
-									htmlFor="quote"
-									className="block text-base font-medium leading-6 text-white"
-								>
-									Quote
-								</label>
-								<div className="mt-2">
-									<textarea
-										id="quote"
-										name="quote"
-										placeholder="“Better three hours too soon than a minute too late.”"
-										maxLength={255}
-										value={quote}
-										onChange={e => {
-											const newValue = e.target.value
-											if (!newValue.includes('"')) {
-												setQuote(newValue)
+									<div className="text-xs text-muted-foreground transition-colors flex items-center">
+										<span
+											className={
+												author.length === 40 ? 'text-destructive font-medium' : ''
 											}
-										}}
-										required
-										className={`min-h-28 max-h-40 outline-none block w-full rounded-md border-0 bg-white/10 p-2.5 text-white shadow-sm ring-1 ring-inset focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6 ${
-											quote.length === 255 ? 'ring-red-500 focus:ring-red-700' : ''
-										}`}
-									/>
-									<div className="text-white mt-3 text-xs">
-										<span className={`${quote.length === 255 ? 'text-red-500' : ''}`}>
-											{quote.length}/255
+										>
+											{author.length}
+										</span>
+										/40 characters
+									</div>
+								</motion.div>
+
+								<motion.div
+									className="space-y-2"
+									initial={{ opacity: 0, x: -20 }}
+									animate={{ opacity: 1, x: 0 }}
+									transition={{ delay: 0.2 }}
+								>
+									<Label
+										htmlFor="quote"
+										className="text-sm font-medium flex items-center gap-2"
+									>
+										<QuoteIcon className="h-4 w-4 text-primary" />
+										The Quote
+									</Label>
+									<div className="relative">
+										<span className="absolute left-3 top-3 text-muted-foreground">
+											&ldquo;
+										</span>
+										<Textarea
+											id="quote"
+											name="quote"
+											placeholder="Share wisdom that inspires..."
+											maxLength={255}
+											value={quote}
+											required
+											onChange={e => setQuote(e.target.value)}
+											className={cn(
+												'min-h-[120px] transition-all duration-200',
+												'focus:ring-2 focus:ring-primary/20 resize-none',
+												'text-black dark:text-white pl-6 pr-6'
+											)}
+										/>
+										<span className="absolute right-3 top-3 text-muted-foreground">
+											&rdquo;
 										</span>
 									</div>
-								</div>
-							</div>
+									<div className="text-xs text-muted-foreground transition-colors flex items-center">
+										<span
+											className={
+												quote.length === 255 ? 'text-destructive font-medium' : ''
+											}
+										>
+											{quote.length}
+										</span>
+										/255 characters
+									</div>
+								</motion.div>
 
-							<div className="sm:mt-2 flex">
-								<button
-									onMouseEnter={() => setCreatedHover(true)}
-									onMouseLeave={() => setCreatedHover(false)}
-									className="px-3 sm:px-4 py-3 sm:py-2 w-full sm:w-auto text-white rounded-md bg-indigo-600 text-sm font-semibold shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-								>
-									Add Quote
-								</button>
-							</div>
-						</div>
-						{status && (
-							<div className="relative group flex text-[10px] font-medium z-20">
-								<span
-									className={`pointer-events-none transition-opacity bg-gray-700 text-white px-2 py-1 text-xs rounded-md absolute   
-                            -translate-x-1/2 -translate-y-16 ${
-																													createdHover ? 'opacity-100' : 'opacity-0'
-																												} m-4 mx-auto top-14 left-12 sm:-top-5 sm:left-[3.2rem] min-w-max transform`}
-								>
-									{status}
-								</span>
-							</div>
-						)}
-					</form>
-				</div>
-			</div>
+								{!session && (
+									<motion.div
+										initial={{ opacity: 0, y: 20 }}
+										animate={{ opacity: 1, y: 0 }}
+										transition={{ delay: 0.3 }}
+									>
+										<Alert className="bg-primary/5 border-primary/20">
+											<AlertDescription className="text-sm">
+												✨ Sign in to save your quotes and access them across devices.
+											</AlertDescription>
+										</Alert>
+									</motion.div>
+								)}
+
+								<DialogFooter>
+									<Button
+										type="submit"
+										disabled={isPending}
+										className="w-full transition-all duration-200 hover:scale-[1.02]"
+									>
+										{isPending ? (
+											<>
+												<Sparkles className="size-4 animate-spin text-yellow-500" />
+												Adding...
+											</>
+										) : (
+											<>
+												<Sparkles className="size-4" />
+												Share Quote
+											</>
+										)}
+									</Button>
+								</DialogFooter>
+							</form>
+						</motion.div>
+					</DialogHeader>
+				</DialogContent>
+			</Dialog>
 		</div>
 	)
 }

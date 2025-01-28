@@ -1,50 +1,86 @@
 'use client'
-import { refresh } from '@/app/actions'
 import { useState, useEffect } from 'react'
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from './ui/select'
 
-export default function Filter() {
-	const [filterPreference, setFilterPreference] = useState('')
+type FilterState = {
+	filterType: FilterOption
+	sortBy: SortOption
+}
+
+const defaultFilters: FilterState = {
+	filterType: 'all',
+	sortBy: 'default',
+}
+
+export default function QuoteFilters({
+	onFilterChange,
+}: {
+	onFilterChange: (filters: FilterState) => void
+}) {
+	const [filters, setFilters] = useState<FilterState>(defaultFilters)
 
 	useEffect(() => {
-		const storedFilterPreference = localStorage.getItem('filterPreference')
-		if (storedFilterPreference) {
-			setFilterPreference(storedFilterPreference)
+		const savedFilters = localStorage.getItem('quoteFilters')
+		if (savedFilters) {
+			try {
+				const parsed = JSON.parse(savedFilters)
+				setFilters({
+					filterType: parsed.filterType || defaultFilters.filterType,
+					sortBy: parsed.sortBy || defaultFilters.sortBy,
+				})
+			} catch (error) {
+				console.error('Error parsing saved filters:', error)
+				localStorage.removeItem('quoteFilters')
+			}
 		}
-		handleFilter()
 	}, [])
 
-	useEffect(() => {
-		handleFilter()
-	}, [filterPreference])
-
-	const handleFilterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-		setFilterPreference(event.target.value)
-	}
-
-	const handleFilter = () => {
-		localStorage.setItem('filterPreference', filterPreference)
-		refresh()
+	const handleFilterChange = (newFilters: Partial<FilterState>) => {
+		const updatedFilters = { ...filters, ...newFilters }
+		setFilters(updatedFilters)
+		localStorage.setItem('quoteFilters', JSON.stringify(updatedFilters))
+		onFilterChange(updatedFilters)
 	}
 
 	return (
-		<div className="sm:col-span-2">
-			<label
-				htmlFor="filter"
-				className="px-1.5 py-1 sm:py-0.5 text-white rounded-md bg-gray-700 text-sm shadow-sm"
+		<div className="flex flex-wrap items-center gap-2">
+			<Select
+				value={filters.filterType}
+				onValueChange={(value: FilterOption) =>
+					handleFilterChange({ filterType: value })
+				}
 			>
-				Filter by
-			</label>
-			<select
-				id="filter"
-				name="filter"
-				value={filterPreference}
-				onChange={handleFilterChange}
-				className="bg-slate-700 mt-1.5 block w-full sm:w-40 rounded-md border-0 py-1.5 sm:py-1 px-0.5 ring-1 ring-inset outline-none focus:ring-2 ring-slate-500 focus:ring-indigo-600 sm:text-sm sm:leading-6"
+				<SelectTrigger className="w-[140px]">
+					<SelectValue placeholder="Filter by" />
+				</SelectTrigger>
+				<SelectContent>
+					<SelectItem value="all">All Quotes</SelectItem>
+					<SelectItem value="likes">Likes Only</SelectItem>
+					<SelectItem value="dislikes">Dislikes Only</SelectItem>
+				</SelectContent>
+			</Select>
+
+			<Select
+				value={filters.sortBy}
+				onValueChange={(value: SortOption) => handleFilterChange({ sortBy: value })}
 			>
-				<option value="">Default</option>
-				<option value="likes">Likes</option>
-				<option value="dislikes">Dislikes</option>
-			</select>
+				<SelectTrigger className="w-[140px]">
+					<SelectValue placeholder="Sort by" />
+				</SelectTrigger>
+				<SelectContent>
+					<SelectItem value="default">Default</SelectItem>
+					<SelectItem value="new">Newest First</SelectItem>
+					<SelectItem value="old">Oldest First</SelectItem>
+					<SelectItem value="most">Most Likes</SelectItem>
+					<SelectItem value="least">Least Likes</SelectItem>
+				</SelectContent>
+			</Select>
 		</div>
 	)
 }
