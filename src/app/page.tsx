@@ -1,11 +1,10 @@
 import Quotes from '@/components/Quotes'
 import { getData } from './actions'
+import { connection } from 'next/server'
 
 export default async function Home() {
+	await connection()
 	const data = await getData()
-	return (
-		<div className="bg-slate-50 dark:bg-slate-950 min-h-dvh">
-			<Quotes data={data as Quote[]} />
-		</div>
-	)
+
+	return <Quotes data={data as Quote[]} />
 }

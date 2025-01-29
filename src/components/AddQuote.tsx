@@ -29,15 +29,28 @@ export default function CreateQuote() {
 	const router = useRouter()
 	const { data: session } = authClient.useSession()
 
+	const anonymousSignIn = async () => {
+		await authClient.signIn.anonymous()
+	}
+
 	const create = async (formData: FormData) => {
 		try {
+			const quote = formData.get('quote') as string
+			const author = formData.get('author') as string
+
 			startTransition(async () => {
-				const quote = formData.get('quote') as string
-				const author = formData.get('author') as string
-				await saveData(quote, author, session?.user?.id as string)
-				toast.success('✨ Quote added successfully!', {
-					description: 'Your quote has been saved and will inspire others.',
-				})
+				let id = session?.user?.id
+
+				if (!id) {
+					await anonymousSignIn()
+					const updatedSession = await authClient.getSession()
+					id = updatedSession?.data?.user?.id
+				} else {
+					throw new Error('Failed to get user ID')
+				}
+
+				await saveData(quote, author, id as string)
+				toast.success('✨ Quote added successfully!')
 				setOpen(false)
 				router.refresh()
 				setAuthor('')
@@ -154,7 +167,7 @@ export default function CreateQuote() {
 									</div>
 								</motion.div>
 
-								{!session && (
+								{(!session || session?.user?.isAnonymous) && (
 									<motion.div
 										initial={{ opacity: 0, y: 20 }}
 										animate={{ opacity: 1, y: 0 }}
@@ -162,8 +175,13 @@ export default function CreateQuote() {
 									>
 										<Alert className="bg-primary/5 border-primary/20">
 											<AlertDescription className="text-sm">
-												✨ Sign in to save your quotes and access them across devices.
+												✨ Sign in to access your quotes across all your devices.
 											</AlertDescription>
+											{!session?.user?.isAnonymous && (
+												<div className="text-xs text-muted-foreground">
+													Publishing a quote now will sign you in anonymously.
+												</div>
+											)}
 										</Alert>
 									</motion.div>
 								)}
@@ -182,7 +200,7 @@ export default function CreateQuote() {
 										) : (
 											<>
 												<Sparkles className="size-4" />
-												Share Quote
+												Publish Quote
 											</>
 										)}
 									</Button>

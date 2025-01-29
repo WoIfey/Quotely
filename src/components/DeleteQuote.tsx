@@ -15,7 +15,7 @@ import {
 	AlertDialogTrigger,
 } from './ui/alert-dialog'
 
-export default function DeleteModal({
+export default function DeleteQuote({
 	id,
 	onDelete,
 }: {
@@ -33,9 +33,9 @@ export default function DeleteModal({
 
 	return (
 		<AlertDialog open={isOpen} onOpenChange={setIsOpen}>
-			<AlertDialogTrigger>
-				<Button variant="destructive" size="icon" className="h-8 w-8">
-					<Trash2 className="h-4 w-4" />
+			<AlertDialogTrigger asChild>
+				<Button variant="destructive" size="icon" className="size-8">
+					<Trash2 className="size-4" />
 				</Button>
 			</AlertDialogTrigger>
 

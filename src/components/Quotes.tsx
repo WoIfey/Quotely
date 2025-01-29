@@ -61,10 +61,10 @@ export default function Quotes({ data }: { data: Quote[] }) {
 	}, [data, handleFilterChange])
 
 	return (
-		<div>
+		<div className="min-h-screen flex flex-col bg-slate-50 dark:bg-zinc-950">
 			<Header quotes={quotes} onFilterChange={handleFilterChange} />
 
-			<div className="container mx-auto p-4 py-6 pb-24 grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6">
+			<div className="container mx-auto p-4 py-6 flex-grow grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6">
 				{isFilterLoading ? (
 					<>
 						{[...Array(quotes.length)].map((_, i) => (
@@ -92,7 +92,8 @@ export default function Quotes({ data }: { data: Quote[] }) {
 							className={cn(
 								'relative group border dark:border-gray-800',
 								'dark:bg-gradient-to-br dark:from-gray-900/50 dark:to-gray-800/50',
-								'bg-gradient-to-br from-white to-gray-50/50'
+								'bg-gradient-to-br from-white to-gray-50/50',
+								'flex flex-col min-h-[300px]'
 							)}
 						>
 							<CardHeader className="pb-2">
@@ -111,7 +112,7 @@ export default function Quotes({ data }: { data: Quote[] }) {
 									</div>
 								</div>
 							</CardHeader>
-							<CardContent className="pt-4 relative">
+							<CardContent className="pt-4 relative flex-grow">
 								<div className="absolute top-0 left-2 text-7xl leading-none opacity-10 dark:opacity-5 font-serif select-none text-primary">
 									&ldquo;
 								</div>
@@ -125,7 +126,7 @@ export default function Quotes({ data }: { data: Quote[] }) {
 									&ldquo;
 								</div>
 							</CardContent>
-							<CardFooter className="flex flex-col gap-2 py-4 border-t dark:border-gray-800 bg-gradient-to-b from-transparent to-muted/5">
+							<CardFooter className="flex flex-col gap-2 py-4 border-t dark:border-gray-800 bg-gradient-to-b from-transparent to-muted/5 mt-auto">
 								<div className="flex items-center justify-between w-full">
 									<Likes
 										id={q.id.toString()}

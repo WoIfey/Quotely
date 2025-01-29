@@ -9,7 +9,7 @@ import {
 	DropdownMenuTrigger,
 } from './ui/dropdown-menu'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
-import { Loader2, User, LogIn } from 'lucide-react'
+import { Loader2, User, LogIn, AlertCircle } from 'lucide-react'
 import { Moon, Sun } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import { Button } from '@/components/ui/button'
@@ -24,6 +24,17 @@ import {
 } from '@/components/ui/dialog'
 import Google from './ui/google'
 import Github from './ui/github'
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+	AlertDialogTrigger,
+} from '@/components/ui/alert-dialog'
 
 export default function Profile() {
 	const { data: session, isPending } = authClient.useSession()
@@ -95,12 +106,58 @@ export default function Profile() {
 							/>
 						</span>
 					</DropdownMenuItem>
-					<DropdownMenuItem
-						onClick={handleSignOut}
-						className="text-red-600 dark:text-red-400 focus:text-red-600 dark:focus:text-red-400"
-					>
-						Sign out
-					</DropdownMenuItem>
+					{session?.user?.isAnonymous && (
+						<>
+							<DropdownMenuItem
+								onClick={googleSignIn}
+								className="flex items-center gap-2"
+							>
+								<Google />
+								Link with Google
+							</DropdownMenuItem>
+							<DropdownMenuItem
+								onClick={githubSignIn}
+								className="flex items-center gap-2"
+							>
+								<Github className="invert dark:invert-0" />
+								Link with GitHub
+							</DropdownMenuItem>
+						</>
+					)}
+					{session?.user?.isAnonymous ? (
+						<AlertDialog>
+							<AlertDialogTrigger asChild>
+								<DropdownMenuItem
+									onSelect={e => e.preventDefault()}
+									className="text-red-600 dark:text-red-400 focus:text-red-600 dark:focus:text-red-400"
+								>
+									Sign out
+								</DropdownMenuItem>
+							</AlertDialogTrigger>
+							<AlertDialogContent>
+								<AlertDialogHeader>
+									<AlertDialogTitle className="flex items-center gap-2">
+										<AlertCircle className="size-5 text-yellow-500" /> Are you sure?
+									</AlertDialogTitle>
+									<AlertDialogDescription>
+										You wont be able to sign into this anonymous account anymore and wont
+										be able to manage your quotes.
+									</AlertDialogDescription>
+								</AlertDialogHeader>
+								<AlertDialogFooter>
+									<AlertDialogCancel>Cancel</AlertDialogCancel>
+									<AlertDialogAction onClick={handleSignOut}>Sign out</AlertDialogAction>
+								</AlertDialogFooter>
+							</AlertDialogContent>
+						</AlertDialog>
+					) : (
+						<DropdownMenuItem
+							onClick={handleSignOut}
+							className="text-red-600 dark:text-red-400 focus:text-red-600 dark:focus:text-red-400"
+						>
+							Sign out
+						</DropdownMenuItem>
+					)}
 				</DropdownMenuContent>
 			</DropdownMenu>
 		)
