@@ -1,9 +1,9 @@
 'use client'
-import { incrementLikes, decrementLikes, getUserVote } from '@/app/actions'
+import { incrementLikes, decrementLikes } from '@/app/actions'
 import { ArrowUp, ArrowDown } from 'lucide-react'
 import { Button } from './ui/button'
 import { authClient } from '@/lib/auth-client'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { toast } from 'sonner'
 
 export default function Likes({
@@ -17,16 +17,6 @@ export default function Likes({
 }) {
 	const { data: session } = authClient.useSession()
 	const [userVote, setUserVote] = useState(0)
-
-	useEffect(() => {
-		const fetchUserVote = async () => {
-			if (session?.user?.id) {
-				const vote = await getUserVote(Number(id), session.user.id)
-				setUserVote(vote)
-			}
-		}
-		fetchUserVote()
-	}, [id, session?.user?.id])
 
 	const handleLike = async () => {
 		if (!session?.user?.id) {

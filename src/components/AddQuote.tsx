@@ -45,8 +45,6 @@ export default function CreateQuote() {
 					await anonymousSignIn()
 					const updatedSession = await authClient.getSession()
 					id = updatedSession?.data?.user?.id
-				} else {
-					throw new Error('Failed to get user ID')
 				}
 
 				await saveData(quote, author, id as string)

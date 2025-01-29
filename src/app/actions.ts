@@ -152,23 +152,6 @@ export async function decrementLikes(id: number, userId: string) {
     }
 }
 
-export async function getUserVote(quoteId: number, userId: string) {
-    try {
-        const vote = await prisma.quoteLike.findUnique({
-            where: {
-                quoteId_userId: {
-                    quoteId,
-                    userId
-                }
-            }
-        });
-        return vote?.value || 0;
-    } catch (error) {
-        console.log(error);
-        return 0;
-    }
-}
-
 export async function getFilteredData(filter: FilterParams, sort: SortOption) {
     const query: Prisma.QuotesFindManyArgs = {
         include: {

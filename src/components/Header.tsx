@@ -4,10 +4,8 @@ import QuoteFilters from './FilterQuotes'
 import Profile from './Profile'
 
 export default function Header({
-	quotes,
 	onFilterChange,
 }: {
-	quotes: Quote[]
 	onFilterChange: (filters: {
 		filterType: FilterOption
 		sortBy: SortOption
@@ -26,10 +24,6 @@ export default function Header({
 							</Link>
 						</div>
 						<QuoteFilters onFilterChange={onFilterChange} />
-						<div className="flex items-center gap-1.5 px-2 py-0.5 bg-primary/10 rounded-full">
-							<span className="text-sm font-medium text-primary">{quotes.length}</span>
-							<span className="text-xs text-primary/80">quotes</span>
-						</div>
 					</div>
 
 					<div className="flex items-center gap-3">

@@ -10,11 +10,13 @@ import { cn } from '@/lib/utils'
 import { authClient } from '@/lib/auth-client'
 import Header from './Header'
 import Footer from './Footer'
+import { Loader2 } from 'lucide-react'
 
 export default function Quotes({ data }: { data: Quote[] }) {
 	const [quotes, setQuotes] = useState<Quote[]>(data)
 	const [isFilterLoading, startTransition] = useTransition()
 	const { data: session } = authClient.useSession()
+	const [mounted, setMounted] = useState(false)
 
 	const updateQuoteLikes = (quoteId: string, newLikes: number) => {
 		setQuotes(prevQuotes =>
@@ -60,9 +62,21 @@ export default function Quotes({ data }: { data: Quote[] }) {
 		applyInitialFilters()
 	}, [data, handleFilterChange])
 
+	useEffect(() => {
+		setMounted(true)
+	}, [])
+
+	if (!mounted) {
+		return (
+			<div className="min-h-screen flex items-center justify-center flex-col gap-4 bg-slate-50 dark:bg-zinc-950">
+				<Loader2 className="size-16 animate-spin" />
+			</div>
+		)
+	}
+
 	return (
 		<div className="min-h-screen flex flex-col bg-slate-50 dark:bg-zinc-950">
-			<Header quotes={quotes} onFilterChange={handleFilterChange} />
+			<Header onFilterChange={handleFilterChange} />
 
 			<div className="container mx-auto p-4 py-6 flex-grow grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6">
 				{isFilterLoading ? (
