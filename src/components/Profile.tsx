@@ -9,7 +9,7 @@ import {
 	DropdownMenuTrigger,
 } from './ui/dropdown-menu'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
-import { Loader2, User, LogIn, AlertCircle } from 'lucide-react'
+import { Loader2, User, LogIn, AlertCircle, Trash2, LogOut } from 'lucide-react'
 import { Moon, Sun } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import { Button } from '@/components/ui/button'
@@ -35,6 +35,7 @@ import {
 	AlertDialogTitle,
 	AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
+import { deleteAccount } from '@/app/actions'
 
 export default function Profile() {
 	const { data: session, isPending } = authClient.useSession()
@@ -57,6 +58,11 @@ export default function Profile() {
 	}
 
 	const handleSignOut = async () => {
+		await authClient.signOut()
+	}
+
+	const handleDeleteAccount = async () => {
+		await deleteAccount(session?.user?.id || '')
 		await authClient.signOut()
 	}
 
@@ -131,6 +137,7 @@ export default function Profile() {
 									onSelect={e => e.preventDefault()}
 									className="text-red-600 dark:text-red-400 focus:text-red-600 dark:focus:text-red-400"
 								>
+									<LogOut className="size-4" />
 									Sign out
 								</DropdownMenuItem>
 							</AlertDialogTrigger>
@@ -146,17 +153,47 @@ export default function Profile() {
 								</AlertDialogHeader>
 								<AlertDialogFooter>
 									<AlertDialogCancel>Cancel</AlertDialogCancel>
-									<AlertDialogAction onClick={handleSignOut}>Sign out</AlertDialogAction>
+									<AlertDialogAction onClick={handleDeleteAccount}>
+										Sign out
+									</AlertDialogAction>
 								</AlertDialogFooter>
 							</AlertDialogContent>
 						</AlertDialog>
 					) : (
-						<DropdownMenuItem
-							onClick={handleSignOut}
-							className="text-red-600 dark:text-red-400 focus:text-red-600 dark:focus:text-red-400"
-						>
-							Sign out
-						</DropdownMenuItem>
+						<>
+							<AlertDialog>
+								<AlertDialogTrigger asChild>
+									<DropdownMenuItem
+										onSelect={e => e.preventDefault()}
+										className="text-red-600 dark:text-red-400 focus:text-red-600 dark:focus:text-red-400"
+									>
+										<Trash2 className="size-4" />
+										Delete Account
+									</DropdownMenuItem>
+								</AlertDialogTrigger>
+								<AlertDialogContent>
+									<AlertDialogHeader>
+										<AlertDialogTitle className="flex items-center gap-2">
+											<AlertCircle className="size-5 text-red-500" /> Are you sure?
+										</AlertDialogTitle>
+										<AlertDialogDescription>
+											Your account will be deleted but your quotes will stay intact as
+											anonymous and wont be able to be managed.
+										</AlertDialogDescription>
+									</AlertDialogHeader>
+									<AlertDialogFooter>
+										<AlertDialogCancel>Cancel</AlertDialogCancel>
+										<AlertDialogAction onClick={handleDeleteAccount}>
+											Delete Account
+										</AlertDialogAction>
+									</AlertDialogFooter>
+								</AlertDialogContent>
+							</AlertDialog>
+							<DropdownMenuItem onClick={handleSignOut}>
+								<LogOut className="size-4" />
+								Sign out
+							</DropdownMenuItem>
+						</>
 					)}
 				</DropdownMenuContent>
 			</DropdownMenu>

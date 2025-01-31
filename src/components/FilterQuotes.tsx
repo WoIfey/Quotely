@@ -49,7 +49,7 @@ export default function QuoteFilters({
 	}
 
 	return (
-		<div className="flex flex-wrap items-center gap-2">
+		<div className="flex justify-center items-center gap-2">
 			<Select
 				value={filters.filterType}
 				onValueChange={(value: FilterOption) =>

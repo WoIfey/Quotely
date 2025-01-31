@@ -199,3 +199,9 @@ export async function getFilteredData(filter: FilterParams, sort: SortOption) {
 
     return await prisma.quotes.findMany(query)
 }
+
+export async function deleteAccount(userId: string) {
+    await prisma.user.delete({
+        where: { id: userId }
+    })
+}

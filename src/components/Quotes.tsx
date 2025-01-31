@@ -78,7 +78,7 @@ export default function Quotes({ data }: { data: Quote[] }) {
 		<div className="min-h-screen flex flex-col bg-slate-50 dark:bg-zinc-950">
 			<Header onFilterChange={handleFilterChange} />
 
-			<div className="container mx-auto p-4 py-6 flex-grow grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6">
+			<div className="container mx-auto h-full p-4 py-6 flex-grow grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6 content-start">
 				{isFilterLoading ? (
 					<>
 						{[...Array(quotes.length)].map((_, i) => (
@@ -131,9 +131,11 @@ export default function Quotes({ data }: { data: Quote[] }) {
 									&ldquo;
 								</div>
 								<blockquote className="text-lg leading-relaxed tracking-wide relative z-10">
-									<span className="font-serif italic break-all">{q.quote}</span>
+									<span className="font-serif italic [overflow-wrap:anywhere]">
+										{q.quote}
+									</span>
 								</blockquote>
-								<p className="text-sm text-muted-foreground text-right mt-4 font-medium tracking-wide break-all">
+								<p className="text-sm text-muted-foreground text-right mt-4 font-medium tracking-wide [overflow-wrap:anywhere]">
 									— {q.author}
 								</p>
 								<div className="absolute bottom-0 right-2 text-7xl leading-none opacity-10 dark:opacity-5 font-serif select-none text-primary rotate-180">
